@@ -1,0 +1,29 @@
+{
+  "name": "markit",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "4.0.0-next.3",
+    "@tsconfig/svelte": "^3.0.0",
+    "@types/webextension-polyfill": "^0.10.0",
+    "svelte": "5.0.0-next.143",
+    "svelte-check": "^3.7.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.3.2",
+    "vite": "^4.0.0",
+    "vite-plugin-web-extension": "^4.0.0",
+    "webextension-polyfill": "^0.10.0"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "dexie": "^4.0.7",
+    "lodash-es": "^4.17.21"
+  },
+  "packageManager": "pnpm@8.7.6+sha512.649fcba43cbe20662908f628d8835f9f0d8ca2950e4c74371dc9e16e24aa54bb55e6b4e6b2b6c51dee22df92132e9720bc85a9b566f351367c79f0d85d6a457b"
+}
