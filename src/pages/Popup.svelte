@@ -17,4 +17,5 @@ function onclick() {
     Template: <code>svelte-ts</code>
   </p>
 </div>
-
+<style>
+</style>
