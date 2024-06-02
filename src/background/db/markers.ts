@@ -50,7 +50,7 @@ export async function unmark(content: string) {
   }
 }
 export async function isMarked(content: string) {
-  return (await markers.where(content)
+  return (await markers.where('content')
     .equals(content)
     .count()) == 1
 }
