@@ -7,6 +7,7 @@ import { getByPhrase } from './db/syllables'
 
 
 async function query(phrase: string): Promise<QueryResult | undefined> {
+  updateViewCount(phrase)
   {
     const item = await dictDb.get(phrase);
     if (item) {
