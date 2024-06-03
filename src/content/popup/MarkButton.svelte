@@ -34,6 +34,7 @@
       if (item) {
         hightlightUnderNode(document.body, [item]);
       }
+      status.translation = marker.query(status.content)
     }
     showWin(status.content, status.x, status.y);
   });

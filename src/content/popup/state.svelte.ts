@@ -1,4 +1,4 @@
-import type { DictItem } from "../../share/types";
+import type { DictItem, QueryResult } from "../../share/types";
 import { marker } from '../marker'
 
 export type Visibility = 'show-button' | 'show-win' | 'hidden'
@@ -6,7 +6,7 @@ export const status = $state({
   visibility: 'hidden' as Visibility,
   content: '',
   context: '',
-  translation: Promise.resolve(undefined as DictItem | undefined),
+  translation: Promise.resolve(undefined as QueryResult | undefined),
   x: 0,
   y: 0,
 })
