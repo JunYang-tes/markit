@@ -21,6 +21,12 @@
     "tabs",
     "downloads"
   ],
+  "web_accessible_resources":[
+    {
+      "resources":["html/viewer.html"],
+      "matches":["file:///*"]
+    }
+  ],
   "content_scripts": [
     {
       "matches": [

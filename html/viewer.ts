@@ -149,13 +149,14 @@ function getViewerConfiguration() {
 }
 
 async function run() {
-  console.log("run")
-  const resp = await fetch('file:///home/yj/books/A%20Tour%20of%20C++.pdf')
-  console.log("resp",resp)
-  const data = await resp.blob();
-  console.log("data",data)
-  const url = URL.createObjectURL(data);
-  PDFViewerApplicationOptions.set('defaultUrl',url)
+  const param = new URLSearchParams(location.search)
+  const path = param.get("path")
+  if (path) {
+    const resp = await fetch(`file://${path}`)
+    const data = await resp.blob();
+    const url = URL.createObjectURL(data);
+    PDFViewerApplicationOptions.set('defaultUrl', url)
+  }
   PDFViewerApplication.run(getViewerConfiguration())
 }
 run()
