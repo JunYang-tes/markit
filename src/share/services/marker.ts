@@ -8,5 +8,17 @@ export const markerBuilder = build<{
   isMarked: (content: string) => Promise<boolean>
   getByContent: (content: string) => Promise<MarkedItem | undefined>,
   query: (phrase: string) => Promise<QueryResult | undefined>,
-  updateViewCount: (content: string) => Promise<void>
-}>('marker', ['getList', 'add', 'unmark', 'isMarked', 'getByContent', 'query', 'updateViewCount'])
+  updateViewCount: (content: string) => Promise<void>,
+  downloadDb: () => Promise<void>,
+  importDb: (data: {
+    dict: DictItem[],
+    markers: MarkedItem[],
+    markTrash: MarkedItem[]
+  }) => Promise<void>
+  resetDb: () => void
+}>('marker', [
+  'getList', 'add', 'unmark', 'isMarked', 'getByContent', 'query', 'updateViewCount',
+  'downloadDb',
+  'importDb',
+  'resetDb'
+])

@@ -2,15 +2,9 @@ import browser from 'webextension-polyfill'
 import * as bg from './channel/background'
 import * as fg from './channel/content'
 import { registerChannelHandler } from './channel/common'
+import { isBackground } from './utils'
 
 
-function isBackground() {
-  try {
-    return globalThis.document == null
-  } catch (e) {
-    return false
-  }
-}
 
 export function makeChannel(
   name: string,

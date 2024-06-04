@@ -18,7 +18,8 @@
     "storage",
     "contextMenus",
     "webRequest",
-    "tabs"
+    "tabs",
+    "downloads"
   ],
   "content_scripts": [
     {

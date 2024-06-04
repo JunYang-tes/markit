@@ -31,5 +31,5 @@ export type DictItem = {
 
 export type QueryResult = DictItem &
 {
-  syllables: Array<{ word: string, syllables: string }>
+  syllables: Array<{ word: string, syllables: string[] }>
 }

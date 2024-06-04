@@ -1,8 +1,5 @@
 
 export function isBackground() {
-  try {
-    return globalThis.document == null
-  } catch (e) {
-    return false
-  }
+  console.log("isBackground",globalThis.window == null)
+  return globalThis.window == null
 }

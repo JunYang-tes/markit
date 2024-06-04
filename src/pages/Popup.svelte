@@ -1,21 +1,11 @@
 <script lang="ts">
-let c = $state(0)
-console.log("Hello from the popup!");
-function onclick() {
-  c++;
-}
+  import browser from "webextension-polyfill";
 </script>
 
 <div>
-  <img src="/icon-with-shadow.svg" alt="" />
-  <h1>vite-plugin-web-extension</h1>
-  <div>{c}</div>
-  <button onclick={onclick}>
-    Click
-  </button>
-  <p>
-    Template: <code>svelte-ts</code>
-  </p>
+  <a target="_blank" href={browser.runtime.getURL("html/viewer.html")}>Viewer </a>
+  <a target="_blank" href={browser.runtime.getURL("html/index.html")}>Control Center </a>
 </div>
+
 <style>
 </style>
