@@ -6,7 +6,7 @@ type ParseResult =
 
 export type Option = {
   url: (phrase: string) => string
-  parser: (text: string) => Promise<ParseResult>
+  parser: (text: string) => Promise<Omit<DictItem, 'phrase'>>
 }
 
 export function makeQuery(opt: Option) {
@@ -15,14 +15,10 @@ export function makeQuery(opt: Option) {
       const resp = await fetch(opt.url(phrase))
       const text = await resp.text()
       const item = await opt.parser(text)
-      if (item.type === 'ok') {
-        return {
-          type: 'ok',
-          data: { ...item.data, phrase }
-        } as ParseResult
-      } else {
-        return item as ParseResult
-      }
+      return {
+        type: 'ok',
+        data: { ...item, phrase }
+      } as ParseResult
     } catch (e) {
       console.error("Failed to query:")
       console.error(e)

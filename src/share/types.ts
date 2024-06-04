@@ -26,10 +26,10 @@ export type DictItem = {
   pronounceUA: string,
   pronounceUK: string,
   explaintions: Explaintion[],
-  examples: string[]
+  examples: Array<[eng: string, zh: string]>
 }
 
 export type QueryResult = DictItem &
 {
-  syllables: Array<{ word: string, syllables: string[] }>
+  syllables: Array<{ word: string, syllables: string }>
 }

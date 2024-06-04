@@ -15,17 +15,14 @@ export const query = makeQuery({
     const examples = zip(
       await domParser.queryAllContent('.word-exp .sen-eng'),
       await domParser.queryAllContent('.word-exp .sen-ch')
-    ).map(([a, b]) => `${a}/${b}`)
+    ).map(([a, b]) => [a ?? '', b ?? ''] as [string, string])
 
 
     return {
-      type: 'ok',
-      data: {
-        pronounceUA,
-        pronounceUK,
-        explaintions,
-        examples,
-      }
+      pronounceUA,
+      pronounceUK,
+      explaintions,
+      examples,
     }
   }
 })
