@@ -18,9 +18,8 @@ async function connect() {
     active: true,
     currentWindow: true
   }))[0]
-  console.log("query tab:",tab)
   port = browser.tabs.connect(tab.id!, {
-    name: 'channel'
+    name: 'channel.bg2fg'
   })
   port.onMessage.addListener(onMessage)
   port.onDisconnect.addListener(() => {

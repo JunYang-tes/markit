@@ -13,7 +13,6 @@ function pendingId(msg: ChannelMessage) {
   return `${msg.channelName}.${msg.id}`
 }
 export async function onMessage(message: any, port: browser.Runtime.Port) {
-  console.log(message)
   const { id, channelName, body, type } = message
   if (type === 'req') {
     const handler = messageDispacher[channelName]
@@ -29,7 +28,7 @@ export async function onMessage(message: any, port: browser.Runtime.Port) {
           id,
           body: {
             type: 'error',
-            data: (e as Error).message ?? 'Failed to handle message'
+            data: (e as Error).message ?? 'Failed to handle message',
           }
         })
       }
@@ -44,6 +43,7 @@ export async function onMessage(message: any, port: browser.Runtime.Port) {
       })
     }
   } else {
+    console.log("port.sender",port.sender,message)
     const resolver = pendingSender[`${channelName}.${id}`]
     if (resolver == null) {
       console.error(`No resolver for ${channelName}.${id}`)

@@ -5,7 +5,7 @@ let port: browser.Runtime.Port | null = null;
 
 if (!isBackground()) {
   browser.runtime.onConnect.addListener(port => {
-    if (port.name === 'channel') {
+    if (port.name === 'channel.bg2fg') {
       port.onMessage.addListener(onMessage)
     }
   })
@@ -13,8 +13,8 @@ if (!isBackground()) {
 
 
 function connect() {
-  port = browser.runtime.connect(undefined,{
-    name:'channel'
+  port = browser.runtime.connect(undefined, {
+    name: 'channel'
   });
   port.onMessage.addListener(onMessage)
   port.onDisconnect.addListener(() => {
