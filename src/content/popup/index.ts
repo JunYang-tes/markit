@@ -12,6 +12,9 @@ top:0;
 height:0;
 z-index:1000;
 `)
+const style = document.createElement('style')
+style.innerHTML = `*:not(style) { all: initial }`
+const root = mountPoint.attachShadow({ mode: 'open' })
 document.body.append(mountPoint)
 
 function showFloatingMarkButton() {
@@ -22,11 +25,9 @@ function showFloatingMarkButton() {
   }
   document.body.addEventListener("mousedown", hideWhenClickedOutside);
   document.body.addEventListener("touchstart", hideWhenClickedOutside);
-  const root = mountPoint.attachShadow({ mode: 'open' })
   mount(MarkButton, { target: root })
 }
 function showOpenInViewer() {
-  const root = mountPoint.attachShadow({ mode: 'open' })
   mount(OpenWithMarkit, { target: root })
 }
 
