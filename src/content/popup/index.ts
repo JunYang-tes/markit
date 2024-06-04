@@ -2,6 +2,7 @@ import { mount } from 'svelte'
 import { hide } from './state.svelte'
 import MarkButton from './MarkButton.svelte'
 import OpenWithMarkit from './OpenInViewer.svelte'
+import css  from '../../style.css?raw'
 
 
 const mountPoint = document.createElement('div')
@@ -13,7 +14,10 @@ height:0;
 z-index:1000;
 `)
 const style = document.createElement('style')
-style.innerHTML = `*:not(style) { all: initial }`
+style.innerHTML = `
+*:not(style) { all: initial };
+${css}
+`
 const root = mountPoint.attachShadow({ mode: 'open' })
 document.body.append(mountPoint)
 

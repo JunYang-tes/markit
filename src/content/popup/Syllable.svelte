@@ -12,7 +12,7 @@
 <div>
   {#each syllables as { word, syllables: sylls }}
     <div>
-      <div>{word}</div>
+      <div class="word" >{word}</div>
       <div class="syllables">
         {#each sylls as syllable}
           <span class="syllable">{syllable}</span>
@@ -33,5 +33,8 @@
     border-radius: 50%;
     vertical-align: middle;
     margin-inline: 2px;
+  }
+  .word {
+    color: var(--markit-text-primary);
   }
 </style>
