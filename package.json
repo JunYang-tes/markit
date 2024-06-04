@@ -21,6 +21,7 @@
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.6.5",
     "@types/lodash-es": "^4.17.12",
     "dexie": "^4.0.7",
     "lodash-es": "^4.17.21",

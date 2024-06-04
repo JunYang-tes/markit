@@ -24,7 +24,7 @@ export default defineConfig({
     }),
     webExtension({
       manifest: generateManifest,
-      additionalInputs:['html/viewer.html'],
+      additionalInputs:['html/viewer.html','html/index.html'],
       watchFilePaths: ["package.json", "manifest.json"],
     }),
   ],

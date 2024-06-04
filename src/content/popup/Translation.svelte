@@ -15,7 +15,7 @@
 
 <div class="container">
   {#await translation}
-    <p>loading...</p>
+    <!-- this promise should be resolved quickly -->
   {:then item}
     <div>
       <button onclick={()=>marker.unmark(item.phrase)} >Unmark</button>
@@ -40,7 +40,7 @@
 <style>
   .container {
     background: white;
-    width: 300px;
+    max-width: 300px;
     max-height: 500px;
     overflow: auto;
   }

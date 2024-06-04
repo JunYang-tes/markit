@@ -6,7 +6,7 @@ export const status = $state({
   visibility: 'hidden' as Visibility,
   content: '',
   context: '',
-  translation: Promise.resolve(undefined as QueryResult | undefined),
+  translation: undefined as Promise<QueryResult> | undefined,
   x: 0,
   y: 0,
 })
@@ -20,16 +20,25 @@ export function showMarkerButton(content: string, context: string, x: number, y:
 }
 
 export function showWin(content: string, x: number, y: number) {
+  if (status.content !== content) {
+    status.content = content
+    status.x = x;
+    status.y = y;
+    status.translation =
+      marker.query(content)
+        .then(item => item || Promise.reject("Failed to query"))
+    status.visibility = 'show-win'
+  }
+}
+export function showWinAnyway(x:number,y:number) {
+  status.visibility = 'show-win'
   status.x = x;
   status.y = y;
-  status.translation =
-    marker.query(content)
-      .then(item => item || Promise.reject("Failed to query"))
-  status.visibility = 'show-win'
 }
 
 export function hide() {
   status.visibility = 'hidden'
+  status.content = ''
 }
 
 export function withLoading<Args extends any[], T>(fn: (...args: Args) => Promise<T>) {
