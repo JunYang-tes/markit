@@ -25,24 +25,28 @@ async function connect() {
   port.onDisconnect.addListener(() => {
     port = null
   })
-
+  return new Promise((res) => {
+    setTimeout(res, 200)
+  })
 }
 
 const id = genId();
 export function sendMessage(channelName: string, message: any): Promise<any> {
-  if (port === null) {
-    connect()
-  }
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const seq = id.next().value;
     registerSenderResolver(channelName, seq, resolve, reject)
-    port?.postMessage({
+    if (port === null) {
+      await connect()
+    }
+    if (port == null) {
+      throw new Error("Failed to create port")
+    }
+    port.postMessage({
       type: 'req',
       id: seq,
       channelName,
       body: message
     })
   })
-
 }
 

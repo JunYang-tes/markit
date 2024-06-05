@@ -7,5 +7,5 @@ export function get(phrase: string): Promise<DictItem | undefined> {
     .first())
 }
 export async function add(item: DictItem) {
-  await dict.add(item)
+  await dict.put(item)
 }

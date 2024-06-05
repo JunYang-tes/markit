@@ -10,10 +10,10 @@ import { importDb } from './db/utils'
 
 
 async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult | undefined> {
-  updateViewCount(phrase)
   if (!ignoreCache) {
     const item = await dictDb.get(phrase);
     if (item) {
+      updateViewCount(phrase)
       return {
         ...item,
         syllables: await getByPhrase(phrase)
@@ -23,6 +23,7 @@ async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult
   const item = await youdao(phrase)
   if (item.type === 'ok') {
     dictDb.add(item.data)
+    updateViewCount(phrase)
     return {
       ...item.data,
       syllables: await getByPhrase(phrase)
