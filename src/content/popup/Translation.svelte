@@ -33,7 +33,7 @@
   }
 </script>
 
-<div class="container">
+<div class="markit-container">
   {#await translation}
     <Loading />
   {:then item}
@@ -90,9 +90,10 @@
 </div>
 
 <style>
-  .container {
+  .markit-container {
     background: white;
     max-width: 500px;
+    min-width: 50px;
     max-height: 500px;
     padding: 16px;
     overflow: auto;
@@ -103,7 +104,7 @@
     margin-block: 10px;
   }
 
-  .container :global(*[data-markit_marked]) {
+  .markit-container :global(*[data-markit_marked]) {
     pointer-events: none;
   }
   .pos {
