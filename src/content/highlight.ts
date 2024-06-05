@@ -106,11 +106,11 @@ function modifyDom(node: Node, items: Array<{ content: string, inRange: boolean 
       const span = document.createElement('span')
       span.setAttribute('data-markit_marked', 'true')
       span.append(item.content)
-      span.addEventListener('mouseenter', () => {
+      span.addEventListener('click', () => {
         const rect = span.getBoundingClientRect()
         showWin(item.content, rect.x, rect.y)
       })
-      span.setAttribute('style', 'color:red;text-decoration: underline;cursor:pointer;')
+      span.setAttribute('style', 'color:#d67200;text-decoration: underline wavy;cursor:pointer;')
       frag.append(span)
     } else {
       const text = document.createTextNode(item.content);
