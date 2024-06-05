@@ -39,7 +39,6 @@ export function hightlightUnderNode(node: Node, list: MarkedItem[]) {
           }
         }
         const items = deoverlap(matchItems)
-          .toSorted((a, b) => a.startIdx - b.startIdx)
         if (items.length > 0) {
           modifyDom(child, partionText(text, items))
         }
@@ -67,8 +66,19 @@ export function cancelHighlight(node: Node, content: string) {
 }
 
 function deoverlap(input: Array<{ startIdx: number, endIdx: number }>) {
-  //TODO
-  return input
+  if (input.length === 0) {
+    return input
+  }
+  const sorted = input.toSorted((a, b) => a.startIdx - b.startIdx)
+  const nooverlap = [sorted[0]];
+  for (let i = 1; i < sorted.length; i++) {
+    let last = nooverlap[nooverlap.length - 1];
+    let curr = sorted[i];
+    if (curr.startIdx >= last.endIdx) {
+      nooverlap.push(curr)
+    }
+  }
+  return nooverlap
 }
 function partionText(text: string, indexes: Array<{ startIdx: number, endIdx: number }>) {
   const ret: Array<{
@@ -110,7 +120,7 @@ function modifyDom(node: Node, items: Array<{ content: string, inRange: boolean 
         const rect = span.getBoundingClientRect()
         showWin(item.content, rect.x, rect.y)
       })
-      span.setAttribute('style', 'color:#d67200;text-decoration: underline wavy;cursor:pointer;')
+      span.setAttribute('style', 'color:#d67200;text-decoration: underline wavy;cursor:pointer;text-underline-position: under;')
       frag.append(span)
     } else {
       const text = document.createTextNode(item.content);
