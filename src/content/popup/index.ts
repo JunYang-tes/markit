@@ -13,12 +13,14 @@ top:0;
 height:0;
 z-index:1000;
 `)
-const style = document.createElement('style')
-style.innerHTML = `
-*:not(style) { all: initial };
-${css}
-`
+
 const root = mountPoint.attachShadow({ mode: 'open' })
+root.innerHTML=`
+<style>
+@import 'https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css';
+${css}
+</style>
+`
 document.body.append(mountPoint)
 
 function showFloatingMarkButton() {

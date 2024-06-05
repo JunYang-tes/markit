@@ -5,9 +5,10 @@ export const markerBuilder = build<{
   getList: () => Promise<MarkedItem[]>,
   add: (content: string, url: string, context?: string) => Promise<MarkedItem | undefined>,
   unmark: (content: string) => Promise<void>,
+  deleteMark: (content: string) => Promise<void>,
   isMarked: (content: string) => Promise<boolean>
   getByContent: (content: string) => Promise<MarkedItem | undefined>,
-  query: (phrase: string) => Promise<QueryResult | undefined>,
+  query: (phrase: string, ignoreCache?: boolean) => Promise<QueryResult | undefined>,
   updateViewCount: (content: string) => Promise<void>,
   downloadDb: () => Promise<void>,
   importDb: (data: {
@@ -20,5 +21,6 @@ export const markerBuilder = build<{
   'getList', 'add', 'unmark', 'isMarked', 'getByContent', 'query', 'updateViewCount',
   'downloadDb',
   'importDb',
-  'resetDb'
+  'resetDb',
+  'deleteMark'
 ])

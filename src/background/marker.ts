@@ -1,6 +1,6 @@
 import { markerBuilder } from '../share/services/marker'
 import type { DictItem, QueryResult } from '../share/types'
-import { getByContent, isMarked, getList, add, unmark, updateViewCount } from './db/markers'
+import { getByContent, isMarked, getList, add, unmark, updateViewCount, deleteMark } from './db/markers'
 import * as dictDb from './db/dict'
 import * as db from './db'
 import { query as youdao } from './dict/youdao'
@@ -9,9 +9,9 @@ import { downloadDb } from './download-db'
 import { importDb } from './db/utils'
 
 
-async function query(phrase: string): Promise<QueryResult | undefined> {
+async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult | undefined> {
   updateViewCount(phrase)
-  {
+  if (!ignoreCache) {
     const item = await dictDb.get(phrase);
     if (item) {
       return {
@@ -48,7 +48,7 @@ export function init() {
     downloadDb,
     importDb,
     resetDb,
-    
+    deleteMark
   })
 }
 

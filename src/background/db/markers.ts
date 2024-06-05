@@ -27,6 +27,7 @@ export async function add(content: string, url: string, context?: string) {
       viewCount: 1,
       date: Date.now()
     })
+    markTrash.delete(content)
     return (await markers.get(id))!
   }
 }
@@ -53,4 +54,12 @@ export async function isMarked(content: string) {
   return (await markers.where('content')
     .equals(content)
     .count()) == 1
+}
+export async function deleteMark(content: string) {
+  await Promise.all([
+    markers
+      .delete(content),
+    markTrash
+      .delete(content)
+  ])
 }

@@ -9,7 +9,12 @@
   import { hightlightUnderNode, cancelHighlight } from "../highlight";
   import { marker } from "../marker";
   import Translation from "./Translation.svelte";
-  import { computePosition, shift, flip, autoPlacement } from "@floating-ui/dom";
+  import {
+    computePosition,
+    shift,
+    flip,
+    autoPlacement,
+  } from "@floating-ui/dom";
   import { onMount, untrack } from "svelte";
   let container: HTMLElement;
 
@@ -88,18 +93,20 @@
 
 <div
   bind:this={container}
-  class="container"
+  class="mk-container card"
   style:color={`${status.visibility === "show-button"}?'block':'none'`}
 >
   {#if status.visibility === "show-button"}
-    <button disabled={mark.loading} onclick={mark.call}> Markit </button>
+    <button class="button is-white" disabled={mark.loading} onclick={mark.call}>
+      标记
+    </button>
   {:else if status.visibility === "show-win" && status.translation}
     <Translation translation={status.translation} />
   {/if}
 </div>
 
 <style>
-  .container {
-    border: 1px solid red;
+  .mk-container {
+    overflow: hidden;
   }
 </style>
