@@ -21,13 +21,9 @@ export function build<D extends Record<string, Function>>(
         if (req.type === 'call' && req.namespace === ns) {
           const f = (apis as any)[req.fn];
           if (f) {
-            try {
-              const r = await f(...req.args)
-              console.log("call:", req, r)
-              return r
-            } catch (e) {
-              console.log(e)
-            }
+            const r = await f(...req.args)
+            console.log("call:", req, r)
+            return r
           }
         }
       });

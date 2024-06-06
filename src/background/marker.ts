@@ -4,6 +4,7 @@ import { getByContent, isMarked, getList, add, unmark, updateViewCount, deleteMa
 import * as dictDb from './db/dict'
 import * as db from './db'
 import { query as youdao } from './dict/youdao'
+import { query as iciba } from './dict/iciba'
 import { getByPhrase } from './db/syllables'
 import { downloadDb } from './download-db'
 import { importDb } from './db/utils'
@@ -20,7 +21,7 @@ async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult
       }
     }
   }
-  const item = await youdao(phrase)
+  const item = await iciba(phrase)
   if (item.type === 'ok') {
     dictDb.add(item.data)
     updateViewCount(phrase)
@@ -28,12 +29,13 @@ async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult
       ...item.data,
       syllables: await getByPhrase(phrase)
     }
+  } else {
+    throw new Error("Failed to query:" + item.message)
   }
 }
 
 function resetDb() {
   db.markers.clear()
-  db.markTrash.clear()
   db.dict.clear()
 }
 

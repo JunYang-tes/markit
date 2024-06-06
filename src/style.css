@@ -2,7 +2,25 @@
 :host{
   --markit-text-primary: #141a33;
   --markit-text-secondary: #505673;
+  --markit-text-size-normal: 16px;
+  --markit-text-size-large: 18px;
+  --markit-text-size-xlarge: 22px;
+  --markit-text-size-xxlarge: 24px;
 }
+
+*{
+  font-size: var(--markit-text-size-normal);
+  line-height:1.5;
+}
+
+.chip {
+  display:inline-block;
+  background: var(--markit-text-secondary);
+  padding-inline: 4px;
+  color: white;
+}
+
+
 :root,
 :host {
     --bulma-control-radius: var(--bulma-radius);

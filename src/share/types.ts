@@ -18,17 +18,29 @@ export type Syllable = {
   syllables: string[]
 }
 
-export type Explaintion = {
-  pos: string
-  trans: string
+// export type Explaintion = {
+//   pos: string
+//   trans: string
+// }
+export type Pronounce = {
+  type: string // UA/UK
+  ipa: string
+  url?: string
+}
+export type Explanation = {
+  source: string // 来源
+  items: Array<{
+    pos: string,
+    trans: string,
+    examples: Array<[eng: string, zh: string]>
+  }>
 }
 export type DictItem = {
   phrase: string,
-  pronounceUA: string,
-  pronounceUK: string,
-  explaintions: Explaintion[],
-  examples: Array<[eng: string, zh: string]>
+  pronounce: Pronounce[]
+  explanations: Explanation[],
 }
+
 
 export type QueryResult = DictItem &
 {

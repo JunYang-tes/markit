@@ -1,13 +1,15 @@
 <script lang="ts">
-  let { type = "UA", content = "" } = $props();
+  import type { Pronounce } from "../../share/types";
+
+  let { pronounce }: { pronounce: Pronounce } = $props();
 </script>
 
 <div class=" pro-container">
   <div class="chip">
-    {type}
+    {pronounce.type}
   </div>
   <div>
-    {content}
+    {pronounce.ipa.startsWith("/") ? pronounce.ipa : `/${pronounce.ipa}/`}
   </div>
 </div>
 

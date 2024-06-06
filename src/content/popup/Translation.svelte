@@ -6,6 +6,7 @@
   import Loading from "../../components/Loading.svelte";
   import { cancelHighlight } from "../highlight";
   import Pronounce from "./Pronounce.svelte";
+  import Explanation from "./Explanation.svelte";
 
   let {
     translation,
@@ -40,12 +41,9 @@
     <div>
       <Syllable syllables={item.syllables} />
       <div class="pronounce">
-        {#if item.pronounceUA}
-          <Pronounce type="UA" content={item.pronounceUA} />
-        {/if}
-        {#if item.pronounceUK}
-          <Pronounce type="UK" content={item.pronounceUK} />
-        {/if}
+        {#each item.pronounce as pronounce}
+          <Pronounce {pronounce} />
+        {/each}
       </div>
 
       {#if markerState === "marked"}
@@ -56,36 +54,41 @@
       {/if}
       <button class="button is-small" onclick={requery}> 重新查询 </button>
       <hr />
-      <section>
-        <h1 class="is-size-5 section_title">释意</h1>
-        <ul>
-          {#each item.explaintions as explaintion}
-            <li class="is-flex is-flex-direction-row">
-              <div class="pos">
-                {explaintion.pos}
-              </div>
-              <div class="trans">
-                {explaintion.trans}
-              </div>
-            </li>
-          {/each}
-        </ul>
-      </section>
-      <section>
-        <h1 class="is-size-5 section_title">例句</h1>
-        <ul class="example-list">
-          {#each item.examples as [eng, zh], index}
-            <li class="is-flex is-flex-direction-row">
-              <div class="example-seq">{index + 1}</div>
-              <div>
-                <div>{eng}</div>
-                <div>{zh}</div>
-              </div>
-            </li>
-          {/each}
-        </ul>
-      </section>
+      {#each item.explanations as explanation}
+        <Explanation {explanation} />
+      {/each}
+      <!-- <section> -->
+      <!--   <h1 class="is-size-5 section_title">释意</h1> -->
+      <!--   <ul> -->
+      <!--     {#each item.explaintions as explaintion} -->
+      <!--       <li class="is-flex is-flex-direction-row"> -->
+      <!--         <div class="pos"> -->
+      <!--           {explaintion.pos} -->
+      <!--         </div> -->
+      <!--         <div class="trans"> -->
+      <!--           {explaintion.trans} -->
+      <!--         </div> -->
+      <!--       </li> -->
+      <!--     {/each} -->
+      <!--   </ul> -->
+      <!-- </section> -->
+      <!-- <section> -->
+      <!--   <h1 class="is-size-5 section_title">例句</h1> -->
+      <!--   <ul class="example-list"> -->
+      <!--     {#each item.examples as [eng, zh], index} -->
+      <!--       <li class="is-flex is-flex-direction-row"> -->
+      <!--         <div class="example-seq">{index + 1}</div> -->
+      <!--         <div> -->
+      <!--           <div>{eng}</div> -->
+      <!--           <div>{zh}</div> -->
+      <!--         </div> -->
+      <!--       </li> -->
+      <!--     {/each} -->
+      <!--   </ul> -->
+      <!-- </section> -->
     </div>
+  {:catch err}
+    <div class="message is-danger">{err}</div>
   {/await}
 </div>
 
@@ -106,26 +109,5 @@
 
   .markit-container :global(*[data-markit_marked]) {
     pointer-events: none;
-  }
-  .pos {
-    color: var(--markit-text-secondary);
-    width: 30px;
-    margin-right: 16px;
-    flex-shrink: 0;
-  }
-  .trans {
-    color: var(--markit-text-primary);
-  }
-  .example-seq {
-    color: var(--markit-text-secondary);
-    width: 30px;
-    margin-right: 16px;
-    flex-shrink: 0;
-  }
-  section {
-    margin-top: 10px;
-  }
-  .section_title {
-    border-bottom: 1px solid var(--markit-text-secondary);
   }
 </style>

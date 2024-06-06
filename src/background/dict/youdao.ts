@@ -11,7 +11,7 @@ export const query = makeQuery({
     const explaintions = zip(
       await domParser.queryAllContent('.basic .word-exp .pos'),
       await domParser.queryAllContent('.basic .word-exp .trans')
-    ).map(([pos, trans]) => ({ pos: pos ?? '', trans: trans ?? '' }))
+    ).map(([pos, trans]) => ({ pos: pos ?? '', trans: trans ?? '', examples: [] }))
     const examples = zip(
       await domParser.queryAllContent('.word-exp .sen-eng'),
       await domParser.queryAllContent('.word-exp .sen-ch')
@@ -19,10 +19,14 @@ export const query = makeQuery({
 
 
     return {
-      pronounceUA,
-      pronounceUK,
-      explaintions,
-      examples,
+      pronounce: [
+        { type: 'UK', ipa: pronounceUK },
+        { type: 'UA', ipa: pronounceUA },
+      ],
+      explaintions: [{
+        soruce: '简明',
+        items: explaintions
+      }],
     }
   }
 })
