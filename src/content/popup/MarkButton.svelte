@@ -77,8 +77,8 @@
     } else {
       const item = await marker.add(
         status.content,
-        status.context,
         location.href,
+        status.context,
       );
       if (item) {
         hightlightUnderNode(document.body, [item]);
