@@ -6,6 +6,11 @@
   --markit-text-size-large: 18px;
   --markit-text-size-xlarge: 22px;
   --markit-text-size-xxlarge: 24px;
+  --markit-space-xs: 8px;
+  --markit-space-s: 16px;
+  --markit-space-m: 24px;
+  --markit-space-l: 32px;
+  --markit-space-xl: 48px;
 }
 
 *{
