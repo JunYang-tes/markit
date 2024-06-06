@@ -7,6 +7,7 @@
     "N-PLURAL": "复数名词",
     "N-PROPER": "专有名词",
     ADJ: "形容词",
+    "ADJ-GRADED":"可分级的形容词",
     ADV: "副词",
     V: "动词",
     VERB: "动词",
