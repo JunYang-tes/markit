@@ -9,7 +9,7 @@ export const query = makeQuery({
     const wordInfo = data.props.pageProps.initialReduxState.word.wordInfo
     const baseInfo = wordInfo.baesInfo ??
       wordInfo.baseInfo;
-    const pronounce = baseInfo.symbols.flatMap(
+    const pronounce = baseInfo.symbols?.flatMap(
       (i: any) => [{
         type: 'UA',
         ipa: i.ph_am,
@@ -21,12 +21,12 @@ export const query = makeQuery({
         url: i.ph_am_mp3 ?? i.ph_tts_mp3
       }
       ]
-    )
+    ) ?? []
     const explanations = [
       {
         source: "简明",
         items:
-          baseInfo.symbols.flatMap((i: any) => {
+          baseInfo.symbols?.flatMap((i: any) => {
             return i.parts.map(
               (i: any) => ({
                 pos: i.part,
@@ -34,7 +34,7 @@ export const query = makeQuery({
                 examples: []
               })
             )
-          })
+          }) ?? []
       },
       {
         source: "柯林斯",
