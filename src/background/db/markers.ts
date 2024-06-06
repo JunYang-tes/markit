@@ -1,13 +1,20 @@
 
 import type { MarkedItem } from "../../share/types"
-import { markTrash, markers } from "."
+import { markers } from "."
+
+const Yes = 1
+const No = 0
 
 export async function getList(): Promise<MarkedItem[]> {
-  return markers.toArray()
+  return markers
+    .where('unmarked')
+    .equals(No)
+    .toArray()
 }
 export async function getListOrderByViewCount() {
   return markers
     .orderBy('viewCount')
+    .filter(item => item.unmarked === No)
     .toArray()
 
 }
@@ -24,10 +31,10 @@ export async function add(content: string, url: string, context?: string) {
       context: context ?? '',
       comment: '',
       url: url ?? '',
+      unmarked: No,
       viewCount: 1,
       date: Date.now()
     })
-    markTrash.delete(content)
     return (await markers.get(id))!
   }
 }
@@ -46,8 +53,10 @@ export async function updateViewCount(content: string) {
 export async function unmark(content: string) {
   let item = await getByContent(content);
   if (item) {
-    await markTrash.put(item)
-    await markers.delete(content)
+    markers.put({
+      ...item,
+      unmarked: Yes
+    })
   }
 }
 export async function isMarked(content: string) {
@@ -59,7 +68,5 @@ export async function deleteMark(content: string) {
   await Promise.all([
     markers
       .delete(content),
-    markTrash
-      .delete(content)
   ])
 }

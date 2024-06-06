@@ -9,6 +9,7 @@ export type MarkedItem = {
   context: string
   comment: string
   viewCount: number
+  unmarked: number
   date: number
   url: string
 }

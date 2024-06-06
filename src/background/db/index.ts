@@ -10,14 +10,12 @@ const db = new Dexie("markit") as Dexie & {
 
 db.version(1)
   .stores({
-    markers: "&content,context,comment,viewCount,date,url",
-    markTrash: "&content,context,comment,viewCount,date,url",
+    markers: "&content,context,comment,viewCount,date,url,unmarked",
     syllables: "&word",
     dict: "&phrase"
   })
 
 
 export const markers = db.markers
-export const markTrash = db.markTrash
 export const dict = db.dict
 export const syllables = db.syllables
