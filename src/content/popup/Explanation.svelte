@@ -55,6 +55,7 @@
   }
   .pos {
     color: var(--markit-text-secondary);
+    word-wrap: break-word;
     width: 50px;
     margin-right: 16px;
     flex-shrink: 0;

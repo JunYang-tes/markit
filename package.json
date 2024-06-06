@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.5",
+    "@mdi/js": "^7.4.47",
     "@types/lodash-es": "^4.17.12",
     "dexie": "^4.0.7",
     "lodash-es": "^4.17.21",
