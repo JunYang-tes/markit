@@ -10,17 +10,27 @@ export const query = makeQuery({
     const baseInfo = wordInfo.baesInfo ??
       wordInfo.baseInfo;
     const pronounce = baseInfo.symbols?.flatMap(
-      (i: any) => [{
-        type: 'UA',
-        ipa: i.ph_am,
-        url: i.ph_am_mp3_bk ?? i.ph_tts_mp3_bk
-      },
-      {
-        type: 'UK',
-        ipa: i.ph_en,
-        url: i.ph_am_mp3 ?? i.ph_tts_mp3
+      (i: any) => {
+        const arr = [{
+          type: 'UA',
+          ipa: i.ph_am,
+          url: (i.ph_am_mp3 ?? i.ph_am_mp3_bk ?? '').replace(/^http:/, '')
+        },
+        {
+          type: 'UK',
+          ipa: i.ph_en,
+          url: (i.ph_en_mp3 ?? i.ph_en_mp3_bk ?? '').replace(/^http:/, '')
+        }
+        ]
+        if (arr[0].url == '' && arr[1].url == '') {
+          arr.push({
+            type: "TTS",
+            ipa: i.ph_other,
+            url: (i.ph_tts_mp3 ?? i.ph_tts_mp3_bk).replace(/^http:/, '')
+          })
+        }
+        return arr
       }
-      ]
     ) ?? []
     const explanations = [
       {
