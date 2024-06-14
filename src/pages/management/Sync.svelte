@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { marker } from "../content/marker";
+  import { marker } from "../../content/marker";
 </script>
 
 <button
+  class="button is-primary"
   onclick={() => {
     console.log(marker.downloadDb());
   }}
@@ -42,3 +43,4 @@
 
 }}>Import </button>
 <button onclick={() => console.log(marker.resetDb())}> Reset </button>
+
