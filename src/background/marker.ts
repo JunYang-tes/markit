@@ -8,6 +8,7 @@ import { query as iciba } from './dict/iciba'
 import { getByPhrase } from './db/syllables'
 import { downloadDb } from './download-db'
 import { importDb } from './db/utils'
+import { exportToWebdav } from './sync/im-export'
 
 
 async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult | undefined> {
@@ -51,7 +52,8 @@ export function init() {
     downloadDb,
     importDb,
     resetDb,
-    deleteMark
+    deleteMark,
+    exportToWebdav
   })
 }
 

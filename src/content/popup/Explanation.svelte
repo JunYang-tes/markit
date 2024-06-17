@@ -31,8 +31,8 @@
     </h1>
     <ul>
       {#each explanation.items as item}
-        <li class="is-flex is-flex-direction-row">
-          <div class="pos">{item.pos}</div>
+        <li class="">
+          <div class="pos chip">{item.pos}</div>
           <div class="definition-container">
             <div class="definition">{@html item.trans}</div>
             <Example examples={item.examples}/>
@@ -54,11 +54,11 @@
     margin-block: 10px;
   }
   .pos {
-    color: var(--markit-text-secondary);
-    word-wrap: break-word;
-    width: 50px;
-    margin-right: 16px;
-    flex-shrink: 0;
+    /* color: var(--markit-text-secondary); */
+    /* word-wrap: break-word; */
+    /* width: 50px; */
+    /* margin-right: 16px; */
+    /* flex-shrink: 0; */
   }
   .definition-container {
     flex-grow: 1;

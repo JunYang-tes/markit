@@ -1,3 +1,4 @@
+import type { WebdavAccount } from '../setting'
 import type { DictItem, MarkedItem, QueryResult } from '../types'
 import { build } from './builder'
 
@@ -11,6 +12,7 @@ export const markerBuilder = build<{
   query: (phrase: string, ignoreCache?: boolean) => Promise<QueryResult | undefined>,
   updateViewCount: (content: string) => Promise<void>,
   downloadDb: () => Promise<void>,
+  exportToWebdav: (account:WebdavAccount)=>Promise<void>,
   importDb: (data: {
     dict: DictItem[],
     markers: MarkedItem[],
@@ -22,5 +24,6 @@ export const markerBuilder = build<{
   'downloadDb',
   'importDb',
   'resetDb',
+  'exportToWebdav',
   'deleteMark'
 ])
