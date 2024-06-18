@@ -13,6 +13,7 @@ export const markerBuilder = build<{
   updateViewCount: (content: string) => Promise<void>,
   downloadDb: () => Promise<void>,
   exportToWebdav: (account:WebdavAccount)=>Promise<void>,
+  importFromWebdav: (account:WebdavAccount)=>Promise<number>,
   importDb: (data: {
     dict: DictItem[],
     markers: MarkedItem[],
@@ -25,5 +26,6 @@ export const markerBuilder = build<{
   'importDb',
   'resetDb',
   'exportToWebdav',
+  'importFromWebdav',
   'deleteMark'
 ])

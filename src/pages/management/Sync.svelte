@@ -1,7 +1,6 @@
 <script lang="ts">
   import Button from "../../components/Button.svelte";
   import { marker } from "../../content/marker";
-  import { createClient } from "webdav/web"
   import { getWebdavAccount } from "../../share/setting";
   let account = getWebdavAccount()
 
@@ -22,12 +21,25 @@
 {:then account} 
 {#if account}
   <button onclick={async()=>{
-    console.log(
-    marker.exportToWebdav(account)
-    )
+    try {
+      await marker.exportToWebdav(account)
+      alert("Ok")
+    }catch (e) {
+      alert(e)
+    }
   }}>
     导出到网盘
   </button>
+    <button onclick={async()=>{
+      try {
+        const cnt = await marker.importFromWebdav(account)
+        alert("Imported "+cnt)
+      }catch(e) {
+        alert(e)
+      }
+    }}>
+      从网盘导入
+    </button>
 {:else }
   <button disabled>
     导出到网盘
