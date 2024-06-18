@@ -2,7 +2,13 @@
   import Icon from "../../components/Icon.svelte";
   import type { Pronounce } from "../../share/types";
   import { mdiVolumeHigh } from "@mdi/js";
-  let { pronounce }: { pronounce: Pronounce } = $props();
+  let {
+    pronounce,
+    autoplay = false,
+  }: {
+    autoplay?: boolean;
+    pronounce: Pronounce;
+  } = $props();
   let audio: HTMLAudioElement;
 </script>
 
@@ -14,7 +20,7 @@
     {pronounce.ipa.startsWith("/") ? pronounce.ipa : `/${pronounce.ipa}/`}
   </div>
   {#if pronounce.url}
-    <audio bind:this={audio}>
+    <audio {autoplay} bind:this={audio}>
       <source src={pronounce.url} type="audio/mpeg" />
       <source src={"http://" + pronounce.url} type="audio/mpeg" />
       <source src={"https://" + pronounce.url} type="audio/mpeg" />

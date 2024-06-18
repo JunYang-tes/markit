@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { DictItem, QueryResult } from "../../share/types";
-  import { zip } from "lodash-es";
+  import type { QueryResult } from "../../share/types";
   import Syllable from "./Syllable.svelte";
   import { marker } from "../marker";
   import Loading from "../../components/Loading.svelte";
@@ -38,12 +37,13 @@
   {#await translation}
     <Loading />
   {:then item}
+    {@const autoplayItem = item.pronounce.find(i=>i.ipa!=="")}
     <div>
       <Syllable syllables={item.syllables} />
       <div class="pronounce">
         {#each item.pronounce as pronounce}
           {#if pronounce.ipa}
-            <Pronounce {pronounce} />
+            <Pronounce {pronounce} autoplay={autoplayItem === pronounce} />
           {/if}
         {/each}
       </div>
@@ -59,35 +59,6 @@
       {#each item.explanations as explanation}
         <Explanation {explanation} />
       {/each}
-      <!-- <section> -->
-      <!--   <h1 class="is-size-5 section_title">释意</h1> -->
-      <!--   <ul> -->
-      <!--     {#each item.explaintions as explaintion} -->
-      <!--       <li class="is-flex is-flex-direction-row"> -->
-      <!--         <div class="pos"> -->
-      <!--           {explaintion.pos} -->
-      <!--         </div> -->
-      <!--         <div class="trans"> -->
-      <!--           {explaintion.trans} -->
-      <!--         </div> -->
-      <!--       </li> -->
-      <!--     {/each} -->
-      <!--   </ul> -->
-      <!-- </section> -->
-      <!-- <section> -->
-      <!--   <h1 class="is-size-5 section_title">例句</h1> -->
-      <!--   <ul class="example-list"> -->
-      <!--     {#each item.examples as [eng, zh], index} -->
-      <!--       <li class="is-flex is-flex-direction-row"> -->
-      <!--         <div class="example-seq">{index + 1}</div> -->
-      <!--         <div> -->
-      <!--           <div>{eng}</div> -->
-      <!--           <div>{zh}</div> -->
-      <!--         </div> -->
-      <!--       </li> -->
-      <!--     {/each} -->
-      <!--   </ul> -->
-      <!-- </section> -->
     </div>
   {:catch err}
     <div class="message is-danger">{err}</div>
