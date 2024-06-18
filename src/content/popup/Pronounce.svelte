@@ -15,7 +15,9 @@
   </div>
   {#if pronounce.url}
     <audio bind:this={audio}>
-      <source src={pronounce.url.replace("http", "https")} type="audio/mpeg" />
+      <source src={pronounce.url} type="audio/mpeg" />
+      <source src={"http://" + pronounce.url} type="audio/mpeg" />
+      <source src={"https://" + pronounce.url} type="audio/mpeg" />
     </audio>
     <Icon
       class="play"
