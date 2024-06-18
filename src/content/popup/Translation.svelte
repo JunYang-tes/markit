@@ -42,7 +42,9 @@
       <Syllable syllables={item.syllables} />
       <div class="pronounce">
         {#each item.pronounce as pronounce}
-          <Pronounce {pronounce} />
+          {#if pronounce.ipa}
+            <Pronounce {pronounce} />
+          {/if}
         {/each}
       </div>
 
