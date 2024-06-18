@@ -31,6 +31,7 @@ export async function onMessage(message: any, port: browser.Runtime.Port) {
             data: (e as Error).message ?? 'Failed to handle message',
           }
         })
+        return
       }
       port.postMessage({
         type: 'resp',
