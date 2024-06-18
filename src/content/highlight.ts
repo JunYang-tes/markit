@@ -5,18 +5,18 @@ export function highlight(list: MarkedItem[]) {
   console.log(list)
   hightlightUnderNode(document.body, list)
   const observer = new MutationObserver((mutationList) => {
+    observer.disconnect()
     for (const mutation of mutationList) {
       if (mutation.type === 'childList') {
-        observer.disconnect()
         for (const node of Array.from(mutation.addedNodes)) {
           hightlightUnderNode(node, list)
         }
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        })
       }
     }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    })
   })
   observer.observe(document.body, {
     childList: true,
@@ -120,7 +120,7 @@ function modifyDom(node: Node, items: Array<{ content: string, inRange: boolean 
         const rect = span.getBoundingClientRect()
         showWin(item.content, rect.x, rect.y)
       }, { capture: true })
-      span.setAttribute('style', 'all:unset; color:#d67200;text-decoration: underline wavy;cursor:pointer;text-underline-position: under;')
+      span.setAttribute('style', 'all:unset;position:relative; z-index:10;  color:#d67200;text-decoration: underline wavy;cursor:pointer;text-underline-position: under;')
       frag.append(span)
     } else {
       const text = document.createTextNode(item.content);
