@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import browser from "webextension-polyfill";
 export type WebdavAccount = {
   url: string,
@@ -17,4 +18,15 @@ export async function saveWebdavAccount(data: WebdavAccount) {
   browser.storage.sync.set({
     webdav: data
   })
+}
+
+export async function getId() {
+  let id = (await browser.storage.local.get("id"))?.id
+  if (id) {
+    return id
+  } else {
+    id = nanoid();
+    await browser.storage.local.set({ id })
+    return id
+  }
 }

@@ -4,12 +4,14 @@
   import Statistics from "./management/Statistics.svelte";
   import Setting from "./management/Setting.svelte";
   import "../style.css";
+  import { getId } from "../share/setting";
   const components = {
     Statistics,
     Sync,
-    Setting
+    Setting,
   };
   let selectedSubModule = $state("Sync" as keyof typeof components);
+  let id = getId();
   function handleSideItemClick(e: MouseEvent) {
     if (e.target) {
       const li = e.target as HTMLLIElement;
@@ -29,6 +31,9 @@
     <li data-key="Statistics">统计</li>
     <li data-key="Setting">设置</li>
   </ul>
+  {#await id then id}
+    <div>client id: {id}</div>
+  {/await}
 </aside>
 <main>
   <svelte:component this={components[selectedSubModule]} />
