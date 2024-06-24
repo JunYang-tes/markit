@@ -1,6 +1,7 @@
 <script lang="ts">
   import Button from "../../components/Button.svelte";
   import { marker } from "../../content/marker";
+    import MarkButton from "../../content/popup/MarkButton.svelte";
   import { getWebdavAccount } from "../../share/setting";
   let account = getWebdavAccount()
 
@@ -30,15 +31,34 @@
   }}>
     导出到网盘
   </button>
-    <button onclick={async()=>{
+  <button onclick={async()=>{
+    try {
+      const cnt = await marker.importFromWebdav(account)
+      alert("Imported "+cnt)
+    }catch(e) {
+      alert(e)
+    }
+  }}>
+    从网盘导入
+  </button>
+    <button onclick={async ()=>{
+    try {
+      await marker.uploadJournal(account)
+        alert("OK")
+    }catch(e) {
+      alert(e)
+    }
+    }}>
+      上传日志
+    </button>
+    <button onclick={async() => {
       try {
-        const cnt = await marker.importFromWebdav(account)
-        alert("Imported "+cnt)
-      }catch(e) {
+        await marker.syncFromJournal(account)
+      } catch(e) {
         alert(e)
       }
     }}>
-      从网盘导入
+      按日志同步
     </button>
 {:else }
   <button disabled>

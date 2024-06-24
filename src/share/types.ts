@@ -17,6 +17,27 @@ export type Syllable = {
   word: string,
   syllables: string[]
 }
+export type SyncInfo = {
+  deviceId: string
+  lastAppliedDate: number
+}
+export type DbJournal = {
+  storeName: string
+  date: number
+  operation: JournalOperation
+}
+type JournalOperation =
+  | {
+    kind: 'add',
+    data: any
+  }
+  | {
+    kind: 'update',
+    key: any,
+    data: any
+  }
+  | { kind: 'delete', key: any }
+
 
 // export type Explaintion = {
 //   pos: string

@@ -30,3 +30,13 @@ export async function getId() {
     return id
   }
 }
+
+/*how many days journals will be keep
+ * */ 
+export async function journalLifetime() {
+  const life = await browser.storage.sync.get("journalLifetime")
+  if (life.journalLifetime) {
+    return life.journalLifetime
+  }
+  return 7
+}

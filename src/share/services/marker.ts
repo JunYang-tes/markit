@@ -12,13 +12,15 @@ export const markerBuilder = build<{
   query: (phrase: string, ignoreCache?: boolean) => Promise<QueryResult | undefined>,
   updateViewCount: (content: string) => Promise<void>,
   downloadDb: () => Promise<void>,
-  exportToWebdav: (account:WebdavAccount)=>Promise<void>,
-  importFromWebdav: (account:WebdavAccount)=>Promise<number>,
+  exportToWebdav: (account: WebdavAccount) => Promise<void>,
+  importFromWebdav: (account: WebdavAccount) => Promise<number>,
   importDb: (data: {
     dict: DictItem[],
     markers: MarkedItem[],
     markTrash: MarkedItem[]
-  }) => Promise<void>
+  }) => Promise<void>,
+  uploadJournal: (account: WebdavAccount) => Promise<void>,
+  syncFromJournal: (account: WebdavAccount) => Promise<void>
   resetDb: () => void
 }>('marker', [
   'getList', 'add', 'unmark', 'isMarked', 'getByContent', 'query', 'updateViewCount',
@@ -27,5 +29,7 @@ export const markerBuilder = build<{
   'resetDb',
   'exportToWebdav',
   'importFromWebdav',
-  'deleteMark'
+  'deleteMark',
+  'uploadJournal',
+  'syncFromJournal'
 ])

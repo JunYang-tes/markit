@@ -1,6 +1,6 @@
 
 import type { MarkedItem } from "../../share/types"
-import { markers } from "."
+import { journal, markers } from "."
 
 const Yes = 1
 const No = 0
@@ -26,7 +26,7 @@ export async function add(content: string, url: string, context?: string) {
     .where('content')
     .equals(content)
     .count() === 0) {
-    const id = await markers.add({
+    const item = {
       content,
       context: context ?? '',
       comment: '',
@@ -34,6 +34,15 @@ export async function add(content: string, url: string, context?: string) {
       unmarked: No,
       viewCount: 1,
       date: Date.now()
+    }
+    const id = await markers.add(item)
+    journal.add({
+      storeName: 'markers',
+      date: Date.now(),
+      operation: {
+        kind: 'add',
+        data: item
+      }
     })
     return (await markers.get(id))!
   }
@@ -47,15 +56,33 @@ export async function updateViewCount(content: string) {
   const item = await getByContent(content)
   if (item) {
     item.viewCount++;
-    markers.put(item)
+    await markers.put(item)
+    journal.add({
+      storeName: 'markers',
+      date: Date.now(),
+      operation: {
+        kind: 'update',
+        key: content,
+        data: { content, viewCount: item.viewCount }
+      }
+    })
   }
 }
 export async function unmark(content: string) {
   let item = await getByContent(content);
   if (item) {
-    markers.put({
+    await markers.put({
       ...item,
       unmarked: Yes
+    })
+    journal.add({
+      storeName: 'markers',
+      date: Date.now(),
+      operation: {
+        kind: 'update',
+        key: content,
+        data: { unmarked: Yes }
+      }
     })
   }
 }
@@ -65,8 +92,10 @@ export async function isMarked(content: string) {
     .count()) == 1
 }
 export async function deleteMark(content: string) {
-  await Promise.all([
-    markers
-      .delete(content),
-  ])
+  await markers.delete(content)
+  journal.add({
+    storeName: 'markers',
+    date: Date.now(),
+    operation: { kind: 'delete', key: content }
+  })
 }
