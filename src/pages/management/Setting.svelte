@@ -1,7 +1,13 @@
 <script lang="ts">
-  import { createClient } from "webdav/web";
+  import { createClient } from "webdav";
   import browser from "webextension-polyfill";
-  import { getWebdavAccount, saveWebdavAccount } from "../../share/setting";
+  import {
+    getWebdavAccount,
+    saveWebdavAccount,
+    isAutoSyncEnabled,
+    setIsAutoSyncEnabled,
+  } from "../../share/setting";
+  import Sync from "./Sync.svelte";
   let url = $state("");
   let username = $state("");
   let password = $state("");
@@ -46,11 +52,21 @@
       return false;
     }
   }
+
+  let autoSyncEnabled = $state(null as null | boolean);
+  isAutoSyncEnabled().then((enabled) => {
+    autoSyncEnabled = enabled;
+  });
+  $effect(() => {
+    if (autoSyncEnabled != null) {
+      setIsAutoSyncEnabled(autoSyncEnabled);
+    }
+  });
 </script>
 
 <div>
   <section>
-    <title> Webdav 设置 </title>
+    <div> Webdav 设置 </div>
     <div>
       <input placeholder="服务器地址" bind:value={url} />
     </div>
@@ -66,6 +82,12 @@
     {/if}
     {#if checkValidation.kind === "invalid"}
       <div>{checkValidation.message}</div>
+    {/if}
+  </section>
+  <section>
+    <div>同步设置</div>
+    {#if autoSyncEnabled != null}
+      <input type="checkbox" bind:checked={autoSyncEnabled} />
     {/if}
   </section>
 </div>

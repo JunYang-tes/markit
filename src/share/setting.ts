@@ -32,7 +32,7 @@ export async function getId() {
 }
 
 /*how many days journals will be keep
- * */ 
+ * */
 export async function journalLifetime() {
   const life = await browser.storage.sync.get("journalLifetime")
   if (life.journalLifetime) {
@@ -40,3 +40,20 @@ export async function journalLifetime() {
   }
   return 7
 }
+
+export async function isAutoSyncEnabled() {
+  return (await browser.storage.sync.get("autoSync")).autoSync as boolean ?? false
+}
+export async function setIsAutoSyncEnabled(enabled: boolean) {
+  await browser.storage.sync.set({ autoSync: enabled })
+}
+/**
+ * Unit minutes
+ * */
+export async function minSyncInterval() {
+  return (await browser.storage.sync.get("minSyncInterval")).minSyncInterval as number ?? 3600
+}
+export async function setMinSyncInterval(min: number) {
+  await browser.storage.sync.set({ minSyncInterval: min })
+}
+
