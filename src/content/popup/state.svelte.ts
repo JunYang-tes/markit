@@ -39,6 +39,7 @@ export function showWinAnyway(x:number,y:number) {
 export function hide() {
   status.visibility = 'hidden'
   status.content = ''
+  status.translation = undefined
 }
 
 export function withLoading<Args extends any[], T>(fn: (...args: Args) => Promise<T>) {
