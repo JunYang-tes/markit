@@ -53,11 +53,12 @@ export async function uploadJournal(account: WebdavAccount) {
     : [];
   const lifetime = await journalLifetime()
   const deadline = subDays(Date.now(), lifetime);
-  await client.putFileContents(`/markit-sync/journal/${id}`,
+  await client.putFileContents(path,
     JSON.stringify([...stale.filter(item => {
       return isAfter(item.date, deadline)
     })
       , ...data]))
+  await journal.clear()
 }
 export async function syncFromJournal(account: WebdavAccount) {
   const id = await getId();
@@ -68,9 +69,14 @@ export async function syncFromJournal(account: WebdavAccount) {
     if (item.basename !== id // ensure this journal comes from other device
     ) {
       const info = await syncInfo.get(item.basename)
-      if (info == null) {
+      if (info == null || item.etag == null) {
         promises.push(
           applyJournal(client, item.filename)
+            .then(() => syncInfo.put({
+              deviceId: item.basename,
+              lastAppliedEtag: item.etag ?? '',
+              lastAppliedDate: Date.now()
+            }))
             .catch(e => {
               console.error(`Failed to sync ${item.filename}`, e)
             })
@@ -79,6 +85,11 @@ export async function syncFromJournal(account: WebdavAccount) {
         // journal is updated since last sync
         promises.push(
           applyJournal(client, item.filename, info)
+            .then(() => syncInfo.put({
+              deviceId: item.basename,
+              lastAppliedEtag: item.etag ?? '',
+              lastAppliedDate: Date.now()
+            }))
             .catch(e => {
               console.error(`Failed to sync ${item.filename}`, e)
             })
