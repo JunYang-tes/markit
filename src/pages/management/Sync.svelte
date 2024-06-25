@@ -29,7 +29,6 @@
       alert(e)
     }
   }}>
-    导出到网盘
   </button>
   <button onclick={async()=>{
     try {
@@ -67,6 +66,17 @@
   <div>账号未设置</div>
 {/if}
 {/await}
+
+
+<Button variant="primary">
+  导出
+</Button>
+<Button variant="primary">
+  导入
+</Button>
+<Button>
+  重置
+</Button>
 
 <button onclick={async () => {
   function openFile() {

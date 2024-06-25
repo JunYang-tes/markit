@@ -1,16 +1,23 @@
 <script lang="ts">
+  import type { HTMLButtonAttributes } from "svelte/elements";
+
   let {
-    type,
-  }: {
-    type: "primary" | "primary-outline";
+    variant = "primary",
+    ...rest
+  }: HTMLButtonAttributes & {
+    variant?: "primary" | "primary-outline";
   } = $props();
-  let cls = $derived(`button ${type ==='primary' ? 'is-primary' : 'primary-outline'}`);
+  let cls = $derived(
+    `button ${variant === "primary" ? "is-primary" : "primary-outline"}`,
+  );
 </script>
 
-<button class={cls}> Button </button>
+<button class={cls} {...rest}>
+  <slot />
+</button>
 
 <style>
   .is-primary {
-    color: white;
+    color: var(--bulma-primary-100);
   }
 </style>
