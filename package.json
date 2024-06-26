@@ -26,6 +26,7 @@
     "@types/lodash-es": "^4.17.12",
     "date-fns": "^3.6.0",
     "dexie": "^4.0.7",
+    "json-view": "^0.4.0",
     "lodash-es": "^4.17.21",
     "nanoid": "^5.0.7",
     "pdfjs-dist": "^4.3.136",

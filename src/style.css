@@ -19,6 +19,7 @@
   --markit-space-m: 24px;
   --markit-space-l: 32px;
   --markit-space-xl: 48px;
+  --bulma-modal-card-head-padding: var(--markit-space-xs)
 }
 
 *{

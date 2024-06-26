@@ -4,11 +4,12 @@
   import type { FileStat } from "webdav";
   import { getJournalContent } from "../../../background/sync/im-export";
   import { getWebdavAccount } from "../../../share/setting";
+  import JsonViewer from "../../../components/JsonViewer.svelte";
 
   let { data } = $props<{
     data: FileStat[];
   }>();
-  let viewing = $state("");
+  let viewing = $state([]);
   let dialog: HTMLDialogElement;
   let account = getWebdavAccount();
 </script>
@@ -27,9 +28,7 @@
         <td>
           <button
             onclick={async () => {
-              viewing = JSON.stringify(
-                await getJournalContent(await account, item),
-              );
+              viewing = await getJournalContent(await account, item);
               dialog.showModal();
             }}
           >
@@ -44,5 +43,5 @@
 </table>
 
 <Dialog bind:dialog onclose={() => dialog.close()}>
-  {viewing}
+  <JsonViewer data={viewing} />
 </Dialog>

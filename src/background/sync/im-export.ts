@@ -56,6 +56,7 @@ export async function uploadJournal(account: WebdavAccount) {
     : [];
   const lifetime = await journalLifetime()
   const deadline = subDays(Date.now(), lifetime);
+  await client.deleteFile(path);// make sure file modified date will be updated
   await client.putFileContents(path,
     JSON.stringify([...stale.filter(item => {
       return isAfter(item.date, deadline)
@@ -101,6 +102,10 @@ export async function syncFromJournal(account: WebdavAccount) {
     }
   }
   await Promise.all(promises)
+}
+export async function deleteJournal(account:WebdavAccount,item:FileStat) {
+  const client =await getWebdavClient(account)
+  await client.deleteFile(item.filename)
 }
 async function applyJournal(client: WebDAVClient, path: string, info?: SyncInfo) {
   const stores = {
