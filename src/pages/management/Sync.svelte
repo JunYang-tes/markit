@@ -1,84 +1,30 @@
 <script lang="ts">
+    import { getJournalList } from "../../background/sync/im-export";
   import Button from "../../components/Button.svelte";
   import { marker } from "../../content/marker";
     import MarkButton from "../../content/popup/MarkButton.svelte";
   import { getWebdavAccount } from "../../share/setting";
-  let account = getWebdavAccount()
+  import type { WebdavAccount  } from "../../share/setting";
+    import JournalList from "./Sync/JournalList.svelte";
+  //let account = getWebdavAccount()
+  let account = $state<WebdavAccount|null>(null)
+  getWebdavAccount().then(a=>{
+    account = a
+  });
 
 
 </script>
-
-
-<button
-  class="button is-primary"
+<section>
+  <h1>本地</h1>
+<Button variant="primary"
   onclick={() => {
     console.log(marker.downloadDb());
   }}
 >
-  Export
-</button>
-
-{#await account}
-{:then account} 
-{#if account}
-  <button onclick={async()=>{
-    try {
-      await marker.exportToWebdav(account)
-      alert("Ok")
-    }catch (e) {
-      alert(e)
-    }
-  }}>
-  </button>
-  <button onclick={async()=>{
-    try {
-      const cnt = await marker.importFromWebdav(account)
-      alert("Imported "+cnt)
-    }catch(e) {
-      alert(e)
-    }
-  }}>
-    从网盘导入
-  </button>
-    <button onclick={async ()=>{
-    try {
-      await marker.uploadJournal(account)
-        alert("OK")
-    }catch(e) {
-      alert(e)
-    }
-    }}>
-      上传日志
-    </button>
-    <button onclick={async() => {
-      try {
-        await marker.syncFromJournal(account)
-      } catch(e) {
-        alert(e)
-      }
-    }}>
-      按日志同步
-    </button>
-{:else }
-  <button disabled>
-    导出到网盘
-  </button>
-  <div>账号未设置</div>
-{/if}
-{/await}
-
-
-<Button variant="primary">
   导出
 </Button>
-<Button variant="primary">
-  导入
-</Button>
-<Button>
-  重置
-</Button>
-
-<button onclick={async () => {
+<Button variant="primary"
+  onclick={async () => {
   function openFile() {
     const input = document.createElement('input')
     input.type="file"
@@ -108,7 +54,80 @@
   const data = await readJSON(file)
   marker.importDb(data)
 
+}}
 
-}}>Import </button>
-<button onclick={() => console.log(marker.resetDb())}> Reset </button>
+>
+  导入
+</Button>
+</section>
+
+<section>
+  <h1>网盘</h1>
+  {#if account}
+    <Button onclick={async()=>{
+      try {
+        await marker.exportToWebdav(account!)
+        alert("Ok")
+      }catch (e) {
+        alert(e)
+      }
+    }}>
+      导出
+    </Button>
+    <Button onclick={async()=>{
+      try {
+        const cnt = await marker.importFromWebdav(account!)
+        alert("Imported "+cnt)
+      }catch(e) {
+        alert(e)
+      }
+    }}>
+      导入
+    </Button>
+  {:else}
+    <div>账号未设置</div>
+  {/if}
+</section>
+
+<section>
+  <h1>网盘同步</h1>
+  {#if account !=null}
+    <Button onclick={async ()=>{
+    try {
+      await marker.uploadJournal(account!)
+        alert("OK")
+    }catch(e) {
+      alert(e)
+    }
+    }}>
+      上传
+    </Button>
+    <Button onclick={async() => {
+      try {
+        await marker.syncFromJournal(account!)
+      } catch(e) {
+        alert(e)
+      }
+    }}>
+      同步
+    </Button>
+    {#await getJournalList(account) then list}
+      <JournalList 
+          data={list}
+      />
+    {/await}
+
+
+  {:else}
+  <div>账号未设置</div>
+  {/if}
+</section>
+
+<section>
+  <h1>其它</h1>
+  <Button onclick={()=>marker.resetDb()}>
+    重置
+  </Button>
+</section>
+
 

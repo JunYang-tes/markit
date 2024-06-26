@@ -1,3 +1,4 @@
+import type { FileStat } from 'webdav'
 import type { WebdavAccount } from '../setting'
 import type { DictItem, MarkedItem, QueryResult } from '../types'
 import { build } from './builder'
@@ -21,7 +22,9 @@ export const markerBuilder = build<{
   }) => Promise<void>,
   uploadJournal: (account: WebdavAccount) => Promise<void>,
   syncFromJournal: (account: WebdavAccount) => Promise<void>
-  resetDb: () => void
+  resetDb: () => void,
+  getJournalList: (account: WebdavAccount) => Promise<FileStat[]>
+  getJournalContent: (account: WebdavAccount,file:FileStat) => Promise<any>
 }>('marker', [
   'getList', 'add', 'unmark', 'isMarked', 'getByContent', 'query', 'updateViewCount',
   'downloadDb',
@@ -31,5 +34,7 @@ export const markerBuilder = build<{
   'importFromWebdav',
   'deleteMark',
   'uploadJournal',
-  'syncFromJournal'
+  'syncFromJournal',
+  'getJournalContent',
+  'getJournalList'
 ])

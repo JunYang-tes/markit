@@ -7,7 +7,7 @@ const db = new Dexie("markit") as Dexie & {
   dict: EntityTable<DictItem, 'phrase'>
   syllables: EntityTable<Syllable, 'word'>
   syncInfo: EntityTable<SyncInfo, 'deviceId'>
-  journal: EntityTable<DbJournal, 'storeName'>
+  journal: EntityTable<DbJournal & { id: number }, 'id'>
 }
 
 db.version(1)
@@ -16,7 +16,7 @@ db.version(1)
     syllables: "&word",
     dict: "&phrase",
     syncInfo: "&deviceId",
-    journal: ''
+    journal: '++id'
   })
 
 

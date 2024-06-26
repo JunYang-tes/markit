@@ -62,7 +62,7 @@
   }
   .management {
     display: flex;
-    width: 80vw;
+    width: 60vw;
     height: 80vh;
     border-radius: var(--markit-radius-m);
     overflow: hidden;

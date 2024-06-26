@@ -65,6 +65,8 @@ export async function updateViewCount(content: string) {
         key: content,
         data: { content, viewCount: item.viewCount }
       }
+    }).catch(e => {
+      console.error("Failed to add journal", e)
     })
   }
 }

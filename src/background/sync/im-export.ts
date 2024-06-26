@@ -132,3 +132,14 @@ async function applyJournal(client: WebDAVClient, path: string, info?: SyncInfo)
   }
 
 }
+
+export async function getJournalList(account: WebdavAccount) {
+  const id = await getId();
+  const client = await getWebdavClient(account);
+  const dir = await client.getDirectoryContents(`/markit-sync/journal/`) as FileStat[]
+  return dir
+}
+export async function getJournalContent(account: WebdavAccount, file: FileStat) {
+  const client = await getWebdavClient(account);
+  return readJson(client, file.filename)
+}

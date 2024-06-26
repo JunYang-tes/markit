@@ -13,7 +13,10 @@ export async function run() {
   }
   const escapedTime = Date.now() - state.lastSyncTime
   const minSyncTimeInterval = await minSyncInterval()
+  console.log("last Sync:", state.lastSyncTime)
+  console.log("Escaped time", escapedTime)
   if (escapedTime > minSyncTimeInterval) {
+    console.log("Will sync")
     await uploadJournal(account)
       .catch(e => console.error("Failed to upload journal", e))
     await syncFromJournal(account)
