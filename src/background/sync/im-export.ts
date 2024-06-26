@@ -45,6 +45,9 @@ export async function importFromWebdav(account: WebdavAccount) {
 
 export async function uploadJournal(account: WebdavAccount) {
   const data = await journal.toArray();
+  if (data.length === 0) {
+    return
+  }
   const client = await getWebdavClient(account, '/markit-sync/journal')
   const id = await getId();
   const path = `/markit-sync/journal/${id}`
