@@ -11,6 +11,14 @@ export async function getList(): Promise<MarkedItem[]> {
     .equals(No)
     .toArray()
 }
+
+export async function getAll(orderBy: 'date' | 'viewCount'): Promise<MarkedItem[]> {
+  return markers
+    .orderBy(orderBy)
+    .reverse()
+    .toArray()
+}
+
 export async function getListOrderByViewCount() {
   return markers
     .orderBy('viewCount')

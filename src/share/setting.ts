@@ -50,7 +50,7 @@ export async function setIsAutoSyncEnabled(enabled: boolean) {
 /**
  * Unit minutes
  * */
-export async function minSyncInterval() {
+export async function getMinSyncInterval() {
   return (await browser.storage.sync.get("minSyncInterval")).minSyncInterval as number ?? 3600
 }
 export async function setMinSyncInterval(min: number) {

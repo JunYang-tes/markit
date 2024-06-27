@@ -1,4 +1,4 @@
-import { getWebdavAccount, isAutoSyncEnabled, minSyncInterval } from "../../share/setting"
+import { getWebdavAccount, isAutoSyncEnabled, getMinSyncInterval } from "../../share/setting"
 import { syncFromJournal, uploadJournal } from "./im-export"
 
 const state = {
@@ -12,7 +12,7 @@ export async function run() {
     return
   }
   const escapedTime = Date.now() - state.lastSyncTime
-  const minSyncTimeInterval = await minSyncInterval()
+  const minSyncTimeInterval = await getMinSyncInterval()
   console.log("last Sync:", state.lastSyncTime)
   console.log("Escaped time", escapedTime)
   if (escapedTime > minSyncTimeInterval) {

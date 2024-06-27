@@ -3,6 +3,7 @@
   import Sync from "./management/Sync.svelte";
   import Statistics from "./management/Statistics.svelte";
   import Setting from "./management/Setting.svelte";
+  import MarkList from "./management/Markers.svelte";
   import "../style.css";
   import { getId } from "../share/setting";
   import { management } from "webextension-polyfill";
@@ -10,16 +11,22 @@
     Statistics,
     Sync,
     Setting,
+    MarkList,
   };
-  let selectedSubModule = $state("Sync" as keyof typeof components);
+  let initialKey =
+    location.hash.substring(1) in components
+      ? location.hash.substring(1)
+      : "Sync";
+  console.log("initialKey", location.hash, initialKey);
+  let selectedSubModule = $state(initialKey as keyof typeof components);
   let id = getId();
   function handleSideItemClick(e: MouseEvent) {
     if (e.target) {
-      console.log(e.target);
       const li = e.target as HTMLLIElement;
       const key = li.getAttribute("data-key");
       if (key && key in components) {
         selectedSubModule = key as any;
+        location.hash = key;
       }
     }
   }
@@ -32,6 +39,9 @@
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <ul class="menu-list" onclick={handleSideItemClick}>
         <li><a data-key="Sync">同步</a></li>
+        <li>
+          <a data-key="MarkList"> 单词表 </a>
+        </li>
         <li>
           <a data-key="Statistics"> 统计 </a>
         </li>
@@ -80,5 +90,7 @@
   }
   main {
     padding: var(--markit-space-m);
+    flex-grow: 1;
+    overflow: auto;
   }
 </style>

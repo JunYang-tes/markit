@@ -6,6 +6,8 @@
     saveWebdavAccount,
     isAutoSyncEnabled,
     setIsAutoSyncEnabled,
+    getMinSyncInterval,
+    setMinSyncInterval,
   } from "../../share/setting";
   import Sync from "./Sync.svelte";
   let url = $state("");
@@ -62,11 +64,20 @@
       setIsAutoSyncEnabled(autoSyncEnabled);
     }
   });
+  let minSyncInterval = $state(0);
+  getMinSyncInterval().then((min) => {
+    minSyncInterval = min;
+  });
+  $effect(() => {
+    if (minSyncInterval !== 0) {
+      setMinSyncInterval(minSyncInterval);
+    }
+  });
 </script>
 
 <div>
   <section>
-    <div> Webdav 设置 </div>
+    <div>Webdav 设置</div>
     <div>
       <input placeholder="服务器地址" bind:value={url} />
     </div>
@@ -89,5 +100,7 @@
     {#if autoSyncEnabled != null}
       <input type="checkbox" bind:checked={autoSyncEnabled} />
     {/if}
+    <div>最小同步间隔（分钟）</div>
+    <input type="number" bind:value={minSyncInterval} />
   </section>
 </div>

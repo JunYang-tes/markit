@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { FileStat } from "webdav";
     import { getJournalList } from "../../background/sync/im-export";
   import Button from "../../components/Button.svelte";
   import { marker } from "../../content/marker";
@@ -8,9 +9,19 @@
     import JournalList from "./Sync/JournalList.svelte";
   //let account = getWebdavAccount()
   let account = $state<WebdavAccount|null>(null)
-  getWebdavAccount().then(a=>{
+  let journalList =  $state([] as FileStat[])
+  getWebdavAccount().then(async a=>{
     account = a
+    if(account) {
+    journalList = await getJournalList(account)
+    }
   });
+  async function refreshJournalList() {
+    if(account) {
+      journalList = await getJournalList(account)
+    }
+  }
+
 
 
 </script>
@@ -95,7 +106,7 @@
     <Button onclick={async ()=>{
     try {
       await marker.uploadJournal(account!)
-        alert("OK")
+      refreshJournalList()
     }catch(e) {
       alert(e)
     }
@@ -111,11 +122,9 @@
     }}>
       同步
     </Button>
-    {#await getJournalList(account) then list}
       <JournalList 
-          data={list}
+          data={journalList}
       />
-    {/await}
 
 
   {:else}

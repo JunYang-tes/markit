@@ -19,6 +19,7 @@ export type Syllable = {
 }
 export type SyncInfo = {
   deviceId: string
+  lastAppliedEtag: string
   lastAppliedDate: number
 }
 export type DbJournal = {
