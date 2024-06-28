@@ -103,8 +103,8 @@ export async function syncFromJournal(account: WebdavAccount) {
   }
   await Promise.all(promises)
 }
-export async function deleteJournal(account:WebdavAccount,item:FileStat) {
-  const client =await getWebdavClient(account)
+export async function deleteJournal(account: WebdavAccount, item: FileStat) {
+  const client = await getWebdavClient(account)
   await client.deleteFile(item.filename)
 }
 async function applyJournal(client: WebDAVClient, path: string, info?: SyncInfo) {
@@ -127,8 +127,20 @@ async function applyJournal(client: WebDAVClient, path: string, info?: SyncInfo)
               .catch(noop) // this may exists in store, just ignore it
             break
           case 'update':
-            await store.put(i.operation.data)
-              .catch(noop)
+            const curr = await store.get(i.operation.key)
+            if (curr) {
+              await store.update(i.operation.key, i.operation.data)
+            } else if (i.storeName === "markers") {
+              await stores.markers.add({
+                unmarked: 0,
+                context: i.operation.key,
+                viewCount: 1,
+                date: Date.now(),
+                comment: "",
+                url: ""
+              })
+                .catch((e) => console.error("Failed to add:", i, e))
+            }
             break
           case 'delete':
             await store.delete(i.operation.key)
