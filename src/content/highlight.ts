@@ -32,6 +32,13 @@ export function hightlightUnderNode(node: Node, list: MarkedItem[]) {
         for (const item of list) {
           const idx = text.indexOf(item.content);
           if (idx >= 0) {
+            if(idx>0 && /[a-zA-Z]/.test(text.charAt(idx-1)) ||
+              /[a-zA-Z]/.test(text.charAt(idx+item.content.length))
+            ) {
+              //is parts of a word
+              continue
+            } 
+
             matchItems.push({
               startIdx: idx,
               endIdx: idx + item.content.length
@@ -109,7 +116,22 @@ function partionText(text: string, indexes: Array<{ startIdx: number, endIdx: nu
   }
   return ret
 }
+
+function isInsideContentEidtable(el: Node) {
+  let ele: HTMLElement | null = el as HTMLElement
+  while (ele != null) {
+    if (ele.nodeType == ele.ELEMENT_NODE && ele.getAttribute('contenteditable') === 'true') {
+      return true
+    }
+    ele = ele.parentElement
+  }
+  return false
+}
+
 function modifyDom(node: Node, items: Array<{ content: string, inRange: boolean }>) {
+  if (isInsideContentEidtable(node)) {
+    return
+  }
   const frag = document.createDocumentFragment()
   for (const item of items) {
     if (item.inRange) {
