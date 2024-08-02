@@ -102,6 +102,9 @@
 
 <section>
   <h1>网盘同步</h1>
+  <div>
+    通过应用其它设备的日志来同步数据
+  </div>
   {#if account !=null}
     <Button onclick={async ()=>{
     try {
@@ -122,9 +125,12 @@
     }}>
       同步
     </Button>
-      <JournalList 
+    <div>
+      日志
+    </div>
+    <JournalList 
           data={journalList}
-      />
+    />
 
 
   {:else}

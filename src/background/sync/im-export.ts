@@ -161,5 +161,6 @@ export async function getJournalList(account: WebdavAccount) {
 }
 export async function getJournalContent(account: WebdavAccount, file: FileStat) {
   const client = await getWebdavClient(account);
-  return readJson(client, file.filename)
+  return readJson(client, file.filename) as Promise<DbJournal[]>
+
 }
