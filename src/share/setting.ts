@@ -38,7 +38,14 @@ export async function journalLifetime() {
   if (life.journalLifetime) {
     return life.journalLifetime
   }
-  return 7
+  return 60
+}
+export async function setJournalLifetime(days: number) {
+  if (days > 0) {
+    await browser.storage.sync.set({
+      journalLifetime: days
+    })
+  }
 }
 
 export async function isAutoSyncEnabled() {

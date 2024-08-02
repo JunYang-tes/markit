@@ -8,6 +8,8 @@
     setIsAutoSyncEnabled,
     getMinSyncInterval,
     setMinSyncInterval,
+    journalLifetime,
+    setJournalLifetime,
   } from "../../share/setting";
   import Sync from "./Sync.svelte";
   let url = $state("");
@@ -73,6 +75,16 @@
       setMinSyncInterval(minSyncInterval);
     }
   });
+
+  let journalLifetimeDays = $state(0);
+  journalLifetime().then((days) => {
+    journalLifetimeDays = days;
+  });
+  $effect(() => {
+    if (journalLifetimeDays !== 0) {
+      setJournalLifetime(journalLifetimeDays);
+    }
+  });
 </script>
 
 <div>
@@ -98,9 +110,14 @@
   <section>
     <div>同步设置</div>
     {#if autoSyncEnabled != null}
-      <input type="checkbox" bind:checked={autoSyncEnabled} />
+      <div>
+        自动同步
+        <input type="checkbox" bind:checked={autoSyncEnabled} />
+      </div>
     {/if}
     <div>最小同步间隔（分钟）</div>
     <input type="number" bind:value={minSyncInterval} />
+    <div>日志保留时长(天)</div>
+    <input type="number" bind:value={journalLifetimeDays} />
   </section>
 </div>
