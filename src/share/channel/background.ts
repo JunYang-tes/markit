@@ -14,10 +14,13 @@ if (isBackground()) {
 }
 
 async function connect() {
-  const tab = (await browser.tabs.query({
-    active: true,
+  const tabs = (await browser.tabs.query({
     currentWindow: true
-  }))[0]
+  }));
+  const tab = tabs.find(t=>t.url && t.url.startsWith("http"));
+  if(!tab) {
+    return
+  }
   port = browser.tabs.connect(tab.id!, {
     name: 'channel.bg2fg'
   })
