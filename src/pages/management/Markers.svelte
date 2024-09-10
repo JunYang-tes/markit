@@ -3,20 +3,40 @@
   import { getAll, deleteMark, unmark } from "../../background/db/markers";
   import type { MarkedItem } from "../../share/types";
   let data = $state([] as MarkedItem[]);
+  let sortBy = $state("viewCount" as "viewCount" | "date");
+  $effect(() => {
+    refresh();
+  });
+
   async function refresh() {
-    data = await getAll("viewCount");
-    console.log(data);
+    data = await getAll(sortBy);
   }
-  refresh();
 </script>
+
+{#snippet sortable(
+  column:string,
+  by:'viewCount'|'date')}
+  <button 
+    style="white-space: nowrap;"
+    onclick={()=>{
+    sortBy = by;
+  }}>
+    {column}
+    {#if sortBy == by}
+      v
+    {/if}
+  </button>
+{/snippet}
 
 <table class="table">
   <thead>
     <tr>
       <th>操作</th>
       <th>单词</th>
-      <th>查询次数</th>
-      <th>首查日期</th>
+      <th>
+        {@render sortable("查询次数","viewCount")}
+      </th>
+      <th>{@render sortable("首查日期","date")}</th>
     </tr>
   </thead>
   <tbody>
