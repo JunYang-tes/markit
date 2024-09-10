@@ -1,12 +1,18 @@
 <script lang="ts">
   import { format } from "date-fns";
   import { getAll, deleteMark, unmark } from "../../background/db/markers";
-  import type { MarkedItem } from "../../share/types";
+  import {marker} from '../../content/marker'
+  import type { MarkedItem, QueryResult } from "../../share/types";
+    import Translation from "../../content/popup/Translation.svelte";
+    import { markers } from "../../background/db";
+    import Dialog from "../../components/Dialog.svelte";
   let data = $state([] as MarkedItem[]);
   let sortBy = $state("viewCount" as "viewCount" | "date");
+  let translation = $state(null as null|Promise<QueryResult>);
   $effect(() => {
     refresh();
   });
+  let dialog: HTMLDialogElement;
 
   async function refresh() {
     data = await getAll(sortBy);
@@ -28,6 +34,17 @@
   </button>
 {/snippet}
 
+<Dialog
+  bind:dialog={dialog}
+  onclose={()=>{
+  translation = null;
+    dialog.close();
+    refresh();
+}}>
+{#if translation!= null}
+  <Translation translation={translation} />
+{/if}
+</Dialog>
 <table class="table">
   <thead>
     <tr>
@@ -62,7 +79,16 @@
             取消标记
           </button>
         </td>
-        <td>{item.content}</td>
+        <td>
+          <button onclick={()=>{
+            console.log(dialog)
+            translation = marker.query(item.content)
+              .then(item=>item || Promise.reject("Failed to query"));
+            dialog.showModal();
+          }}>
+          {item.content}
+          </button>
+        </td>
         <td>{item.viewCount}</td>
         <td>{format(item.date, "yyyy-MM-dd hh:mm")}</td>
       </tr>
