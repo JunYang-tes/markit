@@ -97,8 +97,10 @@ export async function unmark(content: string) {
   }
 }
 export async function isMarked(content: string) {
-  return (await markers.where('content')
+  return (await markers
+    .where('content')
     .equals(content)
+    .and(i => i.unmarked == No)
     .count()) == 1
 }
 export async function deleteMark(content: string) {
