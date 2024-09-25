@@ -15,7 +15,7 @@
 {/snippet}
 
 {#if examples.length > 0}
-  <div class="chip">例</div>
+  <div class="chip" style="margin-top: 20px;">例</div>
   {#if examples.length == 1}
     {@render example(examples[0])}
   {:else}

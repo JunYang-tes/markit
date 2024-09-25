@@ -32,7 +32,7 @@
     <ul>
       {#each explanation.items as item}
         <li class="">
-          <div class="pos chip">{item.pos}</div>
+          <div class="pos">{item.pos}</div>
           <div class="definition-container">
             <div class="definition">{@html item.trans}</div>
             <Example examples={item.examples}/>
@@ -54,11 +54,8 @@
     margin-block: 10px;
   }
   .pos {
-    /* color: var(--markit-text-secondary); */
-    /* word-wrap: break-word; */
-    /* width: 50px; */
-    /* margin-right: 16px; */
-    /* flex-shrink: 0; */
+    float: left;
+    margin-right: 10px;
   }
   .definition-container {
     flex-grow: 1;
