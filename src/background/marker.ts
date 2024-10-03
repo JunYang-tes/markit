@@ -9,6 +9,7 @@ import { getByPhrase } from './db/syllables'
 import { downloadDb } from './download-db'
 import { importDb } from './db/utils'
 import { exportToWebdav, getJournalContent, getJournalList, importFromWebdav, syncFromJournal, uploadJournal } from './sync/im-export'
+import { run } from './sync/auto-sync'
 
 
 async function query(phrase: string, ignoreCache?: boolean): Promise<QueryResult | undefined> {
@@ -42,6 +43,7 @@ function resetDb() {
 
 export function init() {
   markerBuilder.provider({
+    runSync: run,
     getByContent,
     isMarked,
     getList,

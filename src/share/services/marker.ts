@@ -24,7 +24,8 @@ export const markerBuilder = build<{
   syncFromJournal: (account: WebdavAccount) => Promise<void>
   resetDb: () => void,
   getJournalList: (account: WebdavAccount) => Promise<FileStat[]>
-  getJournalContent: (account: WebdavAccount,file:FileStat) => Promise<any>
+  getJournalContent: (account: WebdavAccount, file: FileStat) => Promise<any>,
+  runSync: () => Promise<void>
 }>('marker', [
   'getList', 'add', 'unmark', 'isMarked', 'getByContent', 'query', 'updateViewCount',
   'downloadDb',
@@ -36,5 +37,6 @@ export const markerBuilder = build<{
   'uploadJournal',
   'syncFromJournal',
   'getJournalContent',
-  'getJournalList'
+  'getJournalList',
+  'runSync'
 ])

@@ -11,6 +11,7 @@
     journalLifetime,
     setJournalLifetime,
   } from "../../share/setting";
+  import {marker} from '../../content/marker'
   import Sync from "./Sync.svelte";
   let url = $state("");
   let username = $state("");
@@ -64,6 +65,9 @@
   $effect(() => {
     if (autoSyncEnabled != null) {
       setIsAutoSyncEnabled(autoSyncEnabled);
+      if(autoSyncEnabled) {
+        marker.runSync()
+      }
     }
   });
   let minSyncInterval = $state(0);
