@@ -30,6 +30,12 @@
       }
     }
   }
+  const indicatorIndex = {
+    Sync:0,
+    MarkList:1,
+    Statistics:2,
+    Setting:3
+  }
 </script>
 
 <div class="management-container">
@@ -48,6 +54,7 @@
         <li class:selected={selectedSubModule === 'Setting'}>
           <a data-key="Setting"> 设置 </a>
         </li>
+        <div class="indicator" style="--top: {indicatorIndex[selectedSubModule]}"/>
       </ul>
       {#await id then id}
         <div class="client-info">
@@ -92,6 +99,22 @@
     /* flex-direction: column; */
     /* align-items: center; */
   }
+  aside .menu-list {
+    position: relative;
+  }
+  .indicator {
+    --size: 40px;
+    --top:0;
+    position:absolute;
+    top:0;    
+    background: white;
+    position: absolute;
+    height: var(--size);
+    border-right: 2px solid var(--markit-color-primary);
+    right: -24px;
+    transform: translateY(calc(var(--top) * var(--size)));
+    transition: all 0.5s;
+  }  
   .selected a {
     color: var(--markit-color-primary) !important;
     font-weight: bolder;
