@@ -38,14 +38,14 @@
       <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <ul class="menu-list" onclick={handleSideItemClick}>
-        <li><a data-key="Sync">同步</a></li>
-        <li>
+        <li class:selected={selectedSubModule === 'Sync'}><a data-key="Sync">同步</a></li>
+        <li class:selected={selectedSubModule === 'MarkList'}>
           <a data-key="MarkList"> 单词表 </a>
         </li>
-        <li>
+        <li class:selected={selectedSubModule === 'Statistics'}>
           <a data-key="Statistics"> 统计 </a>
         </li>
-        <li>
+        <li class:selected={selectedSubModule === 'Setting'}>
           <a data-key="Setting"> 设置 </a>
         </li>
       </ul>
@@ -77,6 +77,13 @@
     border-radius: var(--markit-radius-m);
     overflow: hidden;
   }
+  
+  @media (max-width: 900px) {
+    .management {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
   aside {
     width: 260px;
     padding: var(--markit-space-m);
@@ -84,6 +91,13 @@
     /* display: flex; */
     /* flex-direction: column; */
     /* align-items: center; */
+  }
+  .selected a {
+    color: var(--markit-color-primary) !important;
+    font-weight: bolder;
+  }
+  li:not(.selected) a {
+    color: var(--markit-text-secondary) !important;
   }
   .client-info {
     text-align: center;
