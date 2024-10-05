@@ -132,7 +132,10 @@
 </div>
 
 <style>
-  .mk-container {
-    overflow: hidden;
-  }
+    .mk-container {
+      overflow: hidden;
+      @media (max-width: 500px) {
+        max-width: 90%;
+      }
+    }
 </style>
