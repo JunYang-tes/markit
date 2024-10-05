@@ -10,6 +10,7 @@
   import "../style.css";
   import { getId } from "../share/setting";
   import { management } from "webextension-polyfill";
+    import { useMediaQuery } from '../hooks/use-media-query.svelte';
   const components = {
     Statistics,
     Sync,
@@ -39,20 +40,6 @@
     MarkList:1,
     Statistics:2,
     Setting:3
-  }
-
-
-  function useMediaQuery(query: string) {
-    const mediaQuery = window.matchMedia(query);
-    let result = $state(false);
-    const updateState = () => {
-      result = mediaQuery.matches;
-    };
-    mediaQuery.addEventListener('change', updateState);
-    updateState();
-    const clear= () => mediaQuery.removeEventListener('change', updateState);
-    
-    return result
   }
 
   const isMobile = useMediaQuery('(max-width: 500px)');
@@ -86,8 +73,8 @@
 {/snippet}
 
 <div class="management-container">
-  <div class="management card {isMobile ? 'mobile' : ''}">
-    {#if isMobile}
+  <div class="management card {isMobile.match ? 'mobile' : ''}">
+    {#if isMobile.match}
       <div class="dropdown nav-menu {isNavMenuVisible ? 'is-active':''}">
         <div class="dropdown-trigger">
           <Icon

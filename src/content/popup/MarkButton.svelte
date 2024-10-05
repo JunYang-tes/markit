@@ -15,8 +15,14 @@
     flip,
     autoPlacement,
   } from "@floating-ui/dom";
+  import type {
+    MiddlewareState,
+    Middleware,
+  } from '@floating-ui/dom'
   import { onMount, untrack } from "svelte";
+  import { useMediaQuery } from "../../hooks/use-media-query.svelte.ts";
   let container: HTMLElement;
+  let isMobile = useMediaQuery('(max-width:500px)')
 
   function place(pos: {
     x: number;
@@ -37,7 +43,27 @@
       container,
       {
         placement: "right-start",
-        middleware: [autoPlacement()],
+        middleware: [
+          status.visibility == "show-button" ? autoPlacement() : null,
+          status.visibility == "show-win"
+            ? isMobile.match
+              ? ({
+                  name: "center",
+                  fn(state: MiddlewareState) {
+                    const { width, height } = state.rects.floating;
+                    const x = (window.innerWidth - width) / 2;
+                    const y = (window.innerHeight - height) / 2;
+                    return {
+                      ...state,
+                      x,
+                      y,
+                    };
+                  },
+                } as Middleware)
+              : autoPlacement()
+            : null,
+          shift(),
+        ].filter((i) => i != null),
       },
     ).then(({ x, y }) => {
       container.style.transform = `translate(${x}px,${y}px)`;
@@ -91,6 +117,7 @@
   });
 </script>
 
+<div>isMobile {isMobile.match}</div>
 <div
   bind:this={container}
   class="mk-container card"
