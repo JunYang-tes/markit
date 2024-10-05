@@ -1,4 +1,7 @@
 <script lang="ts">
+  import '../app.css';
+  import Icon from "../components/Icon.svelte";
+  import {mdiMenu} from '@mdi/js'
   import { marker } from "../content/marker";
   import Sync from "./management/Sync.svelte";
   import Statistics from "./management/Statistics.svelte";
@@ -20,6 +23,7 @@
   console.log("initialKey", location.hash, initialKey);
   let selectedSubModule = $state(initialKey as keyof typeof components);
   let id = getId();
+
   function handleSideItemClick(e: MouseEvent) {
     if (e.target) {
       const li = e.target as HTMLLIElement;
@@ -36,10 +40,26 @@
     Statistics:2,
     Setting:3
   }
+
+
+  function useMediaQuery(query: string) {
+    const mediaQuery = window.matchMedia(query);
+    let result = $state(false);
+    const updateState = () => {
+      result = mediaQuery.matches;
+    };
+    mediaQuery.addEventListener('change', updateState);
+    updateState();
+    const clear= () => mediaQuery.removeEventListener('change', updateState);
+    
+    return result
+  }
+
+  const isMobile = useMediaQuery('(max-width: 500px)');
+  let isNavMenuVisible = $state(false);
 </script>
 
-<div class="management-container">
-  <div class="management card">
+{#snippet nav()}
     <aside class="menu">
       <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
       <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -63,6 +83,29 @@
         </div>
       {/await}
     </aside>
+{/snippet}
+
+<div class="management-container">
+  <div class="management card {isMobile ? 'mobile' : ''}">
+    {#if isMobile}
+      <div class="dropdown nav-menu {isNavMenuVisible ? 'is-active':''}">
+        <div class="dropdown-trigger">
+          <Icon
+            path={mdiMenu}
+            role="button"
+            onclick={()=>isNavMenuVisible=!isNavMenuVisible}
+          />
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+          <div class="dropdown-content">
+            {@render nav()}
+          </div>
+        </div>
+      </div>
+    {:else}
+     {@render nav()}
+    {/if}
+
     <main>
       <svelte:component this={components[selectedSubModule]} />
     </main>
@@ -84,12 +127,19 @@
     border-radius: var(--markit-radius-m);
     overflow: hidden;
   }
+  .management.mobile {
+    flex-direction: column;
+  }
   
   @media (max-width: 900px) {
     .management {
       width: 100vw;
       height: 100vh;
     }
+  }
+  .nav-menu {
+    margin-left: var(--markit-space-m);
+    margin-top: var(--markit-space-m);
   }
   aside {
     width: 260px;
