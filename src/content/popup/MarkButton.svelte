@@ -62,7 +62,7 @@
                 } as Middleware)
               : autoPlacement()
             : null,
-          shift(),
+          //shift(),
         ].filter((i) => i != null),
       },
     ).then(({ x, y }) => {
@@ -117,7 +117,6 @@
   });
 </script>
 
-<div>isMobile {isMobile.match}</div>
 <div
   bind:this={container}
   class="mk-container card"
