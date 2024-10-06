@@ -42,7 +42,12 @@
     refresh();
 }}>
 {#if translation!= null}
-  <Translation translation={translation} />
+  <Translation translation={translation} onClose={()=>{
+  translation = null;
+    dialog.close();
+    refresh();
+
+  }} />
 {/if}
 </Dialog>
 <table class="table">

@@ -89,6 +89,8 @@
       setJournalLifetime(journalLifetimeDays);
     }
   });
+
+  let serversOpen = $state(false);
 </script>
 
 <div>
@@ -96,11 +98,59 @@
     <h3 class="title is-4">Webdav 设置</h3>
     <div class="field">
       <div class="label">服务器地址</div>
-      <input
-        class="input is-primary"
-        placeholder="服务器地址"
-        bind:value={url}
-      />
+      <div
+        class="dropdown {serversOpen ? 'is-active' : ''}"
+        style="display: flex;"
+      >
+        <input
+          class="input is-primary"
+          placeholder="服务器地址"
+          onclick={() => {
+            serversOpen = !serversOpen;
+          }}
+          onblur={() => {
+            setTimeout(() => {
+              serversOpen = false;
+            }, 200);
+          }}
+          bind:value={url}
+        />
+        <div class="dropdown-menu card menu" id="dropdown-menu" role="menu">
+          <ul class=" menu-list">
+            <li>
+              <a
+                href="# "
+                onclick={() => {
+                  url = "https://dav.jianguoyun.com/dav/";
+                  serversOpen = false;
+                }}
+              >
+                坚果云
+              </a>
+            </li>
+            <li>
+              <a
+                href="# "
+                onclick={() => {
+                  url = "https://www.dropbox.com/";
+                  serversOpen = false;
+                }}>Dropbox</a
+              >
+            </li>
+            <li>
+              <a
+                href="# "
+                onclick={() => {
+                  url = "https://webdav.4shared.com";
+                  serversOpen = false;
+                }}
+              >
+                4shared</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="field">
       <div class="label">用户名</div>
@@ -139,7 +189,7 @@
           class="switch is-rounded is-primary"
           bind:checked={autoSyncEnabled}
         />
-        <label for="autoSyncSwitch" >
+        <label for="autoSyncSwitch">
           已{autoSyncEnabled ? "开启" : "关闭"}
         </label>
       </div>
