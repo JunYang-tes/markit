@@ -31,11 +31,10 @@
     width: number;
     height: number;
   }) {
-    const shiftIt = 
-          shift({
-            mainAxis: true,
-            crossAxis: true,
-          });
+    const shiftIt = shift({
+      mainAxis: true,
+      crossAxis: true,
+    });
     computePosition(
       {
         getBoundingClientRect() {
@@ -140,7 +139,7 @@
       标记
     </button>
   {:else if status.visibility === "show-win" && status.translation}
-    <Translation translation={status.translation} />
+    <Translation translation={status.translation} onClose={hide} />
   {/if}
 </div>
 

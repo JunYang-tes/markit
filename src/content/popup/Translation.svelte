@@ -6,11 +6,15 @@
   import { cancelHighlight } from "../highlight";
   import Pronounce from "./Pronounce.svelte";
   import Explanation from "./Explanation.svelte";
+  import Icon from "../../components/Icon.svelte";
+  import { mdiClose } from "@mdi/js";
 
   let {
     translation,
+    onClose,
   }: {
     translation: Promise<QueryResult>;
+    onClose:()=>void
   } = $props();
   let markerState = $state("marked" as "marked" | "canceled" | "deleted");
   async function unmark() {
@@ -37,8 +41,11 @@
   {#await translation}
     <Loading />
   {:then item}
-    {@const autoplayItem = item.pronounce.find(i=>i.ipa!=="")}
-    <div>
+    {@const autoplayItem = item.pronounce.find((i) => i.ipa !== "")}
+    <div style="position:relative;">
+      <Icon path={mdiClose} role="button" style="position: absolute;right: 0;" 
+        onclick={onClose}
+      />
       <Syllable syllables={item.syllables} />
       <div class="pronounce">
         {#each item.pronounce as pronounce}
