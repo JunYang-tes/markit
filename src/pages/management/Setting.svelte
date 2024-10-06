@@ -96,16 +96,24 @@
     <h3 class="title is-4">Webdav 设置</h3>
     <div class="field">
       <div class="label">服务器地址</div>
-      <input class="input is-primary" placeholder="服务器地址" bind:value={url} />
+      <input
+        class="input is-primary"
+        placeholder="服务器地址"
+        bind:value={url}
+      />
     </div>
     <div class="field">
       <div class="label">用户名</div>
-      <input class="input is-primary" placeholder="用户名" bind:value={username} />
+      <input
+        class="input is-primary"
+        placeholder="用户名"
+        bind:value={username}
+      />
     </div>
     <div class="field">
       <div class="label">密码</div>
       <input
-        class="input"
+        class="input is-primary"
         type="password"
         placeholder="密码"
         bind:value={password}
@@ -123,19 +131,34 @@
     <h3 class="title is-4">同步设置</h3>
     {#if autoSyncEnabled != null}
       <div class="field">
-        <label class="checkbox">
-          自动同步
-          <input type="checkbox" bind:checked={autoSyncEnabled} />
+        <div class="label">自动同步</div>
+        <input
+          id="autoSyncSwitch"
+          type="checkbox"
+          name="autoSyncSwitch"
+          class="switch is-rounded is-primary"
+          bind:checked={autoSyncEnabled}
+        />
+        <label for="autoSyncSwitch" >
+          已{autoSyncEnabled ? "开启" : "关闭"}
         </label>
       </div>
     {/if}
     <div class="field">
       <div class="label">最小同步间隔（分钟）</div>
-      <input class="input is-primary" type="number" bind:value={minSyncInterval} />
+      <input
+        class="input is-primary"
+        type="number"
+        bind:value={minSyncInterval}
+      />
     </div>
     <div class="field">
       <div class="label">日志保留时长(天)</div>
-      <input class="input is-primary" type="number" bind:value={journalLifetimeDays} />
+      <input
+        class="input is-primary"
+        type="number"
+        bind:value={journalLifetimeDays}
+      />
     </div>
   </section>
 </div>
@@ -145,6 +168,9 @@
     margin-block: var(--markit-space-m);
   }
   .is-primary.input {
-    --bulma-input-border-l:87%;
+    --bulma-input-border-l: 87%;
+  }
+  .field {
+    margin-bottom: var(--markit-space-s);
   }
 </style>
