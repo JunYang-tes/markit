@@ -15,14 +15,11 @@
     flip,
     autoPlacement,
   } from "@floating-ui/dom";
-  import type {
-    MiddlewareState,
-    Middleware,
-  } from '@floating-ui/dom'
+  import type { MiddlewareState, Middleware } from "@floating-ui/dom";
   import { onMount, untrack } from "svelte";
   import { useMediaQuery } from "../../hooks/use-media-query.svelte.ts";
   let container: HTMLElement;
-  let isMobile = useMediaQuery('(max-width:500px)')
+  let isMobile = useMediaQuery("(max-width:500px)");
 
   function place(pos: {
     x: number;
@@ -34,6 +31,11 @@
     width: number;
     height: number;
   }) {
+    const shiftIt = 
+          shift({
+            mainAxis: true,
+            crossAxis: true,
+          });
     computePosition(
       {
         getBoundingClientRect() {
@@ -60,15 +62,26 @@
                     };
                   },
                 } as Middleware)
-              : autoPlacement()
-            : null,
-          //shift(),
+              : shiftIt
+            : shiftIt,
         ].filter((i) => i != null),
       },
     ).then(({ x, y }) => {
       container.style.transform = `translate(${x}px,${y}px)`;
     });
   }
+  $effect(() => {
+    place({
+      width: 0,
+      height: 0,
+      x: status.x,
+      y: status.y,
+      left: status.x,
+      top: status.y,
+      right: status.x,
+      bottom: status.y,
+    });
+  });
 
   $effect(() => {
     const resize = new ResizeObserver(() => {
@@ -132,10 +145,10 @@
 </div>
 
 <style>
-    .mk-container {
-      overflow: hidden;
-      @media (max-width: 500px) {
-        max-width: 90%;
-      }
+  .mk-container {
+    overflow: hidden;
+    @media (max-width: 500px) {
+      max-width: 90%;
     }
+  }
 </style>
