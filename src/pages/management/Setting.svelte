@@ -11,7 +11,7 @@
     journalLifetime,
     setJournalLifetime,
   } from "../../share/setting";
-  import {marker} from '../../content/marker'
+  import { marker } from "../../content/marker";
   import Sync from "./Sync.svelte";
   let url = $state("");
   let username = $state("");
@@ -65,8 +65,8 @@
   $effect(() => {
     if (autoSyncEnabled != null) {
       setIsAutoSyncEnabled(autoSyncEnabled);
-      if(autoSyncEnabled) {
-        marker.runSync()
+      if (autoSyncEnabled) {
+        marker.runSync();
       }
     }
   });
@@ -93,35 +93,58 @@
 
 <div>
   <section>
-    <div>Webdav 设置</div>
-    <div>
-      <input placeholder="服务器地址" bind:value={url} />
+    <h3 class="title is-4">Webdav 设置</h3>
+    <div class="field">
+      <div class="label">服务器地址</div>
+      <input class="input is-primary" placeholder="服务器地址" bind:value={url} />
     </div>
-    <div>
-      <input placeholder="用户名" bind:value={username} />
+    <div class="field">
+      <div class="label">用户名</div>
+      <input class="input is-primary" placeholder="用户名" bind:value={username} />
     </div>
-    <div>
-      <input type="password" placeholder="密码" bind:value={password} />
+    <div class="field">
+      <div class="label">密码</div>
+      <input
+        class="input"
+        type="password"
+        placeholder="密码"
+        bind:value={password}
+      />
     </div>
-    <button onclick={checkThenSave}> 确定 </button>
+    <button class="button" onclick={checkThenSave}> 确定 </button>
     {#if checkValidation.kind === "validating"}
-      <div>Checking</div>
+      <div class="help">Checking</div>
     {/if}
     {#if checkValidation.kind === "invalid"}
-      <div>{checkValidation.message}</div>
+      <div class="help error">{checkValidation.message}</div>
     {/if}
   </section>
   <section>
-    <div>同步设置</div>
+    <h3 class="title is-4">同步设置</h3>
     {#if autoSyncEnabled != null}
-      <div>
-        自动同步
-        <input type="checkbox" bind:checked={autoSyncEnabled} />
+      <div class="field">
+        <label class="checkbox">
+          自动同步
+          <input type="checkbox" bind:checked={autoSyncEnabled} />
+        </label>
       </div>
     {/if}
-    <div>最小同步间隔（分钟）</div>
-    <input type="number" bind:value={minSyncInterval} />
-    <div>日志保留时长(天)</div>
-    <input type="number" bind:value={journalLifetimeDays} />
+    <div class="field">
+      <div class="label">最小同步间隔（分钟）</div>
+      <input class="input is-primary" type="number" bind:value={minSyncInterval} />
+    </div>
+    <div class="field">
+      <div class="label">日志保留时长(天)</div>
+      <input class="input is-primary" type="number" bind:value={journalLifetimeDays} />
+    </div>
   </section>
 </div>
+
+<style>
+  section {
+    margin-block: var(--markit-space-m);
+  }
+  .is-primary.input {
+    --bulma-input-border-l:87%;
+  }
+</style>
