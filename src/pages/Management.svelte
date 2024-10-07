@@ -118,7 +118,7 @@
     flex-direction: column;
   }
   
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     .management {
       width: 100vw;
       height: 100vh;

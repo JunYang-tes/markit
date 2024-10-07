@@ -28,11 +28,13 @@
     "@floating-ui/dom": "^1.6.5",
     "@mdi/js": "^7.4.47",
     "@types/lodash-es": "^4.17.12",
+    "chart.js": "^4.4.4",
     "date-fns": "^3.6.0",
     "dexie": "^4.0.7",
     "lodash-es": "^4.17.21",
     "nanoid": "^5.0.7",
     "pdfjs-dist": "^4.3.136",
+    "svelte-chartjs": "https://github.com/anowell/svelte-chartjs.git#155042fc4866615014a12414b3b4815223bcb0b3",
     "webdav": "^5.6.0"
   },
   "packageManager": "pnpm@8.7.6+sha512.649fcba43cbe20662908f628d8835f9f0d8ca2950e4c74371dc9e16e24aa54bb55e6b4e6b2b6c51dee22df92132e9720bc85a9b566f351367c79f0d85d6a457b"
