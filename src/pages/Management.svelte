@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../app.css';
+  import './style.css';
   import Icon from "../components/Icon.svelte";
   import {mdiMenu} from '@mdi/js'
   import { marker } from "../content/marker";

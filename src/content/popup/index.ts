@@ -2,7 +2,9 @@ import { mount } from 'svelte'
 import { hide } from './state.svelte'
 import MarkButton from './MarkButton.svelte'
 import OpenWithMarkit from './OpenInViewer.svelte'
+import bulma  from '../../bulma.css?raw'
 import css  from '../../style.css?raw'
+console.log('yj',bulma.indexOf("rem"))
 
 
 const mountPoint = document.createElement('div')
@@ -17,7 +19,7 @@ z-index:1000;
 const root = mountPoint.attachShadow({ mode: 'open' })
 root.innerHTML=`
 <style>
-@import 'https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css';
+${bulma}
 ${css}
 </style>
 `
