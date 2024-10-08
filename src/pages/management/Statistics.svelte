@@ -1,15 +1,45 @@
 <script lang="ts">
-  import { getStatistic } from "../../background/db/markers";
+  import { getStatistic,getMarkedCountsByDateRange } from "../../background/db/markers";
   import type { MarkedItem } from "../../share/types";
-  import { Chart, Bar } from 'svelte-chartjs';
+  import Chart from '../../components/Chart.svelte';
+  import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+  } from 'chart.js';
+    import { startOfDay, subDays, endOfDay, formatDate } from "date-fns";
+  ChartJS.register(
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale
+  );
 
   let statistics=$state( { total: 0, today: 0, mostFrequent: undefined as undefined|MarkedItem, unmarked: 0, marked: 0,
-    lastSevenDaysMarked:[] as { day: number; count: number }[]
+    lastSevenDaysMarked:[] as { day: Date; count: number }[]
    });
+   let dataRange = $state([
+    startOfDay(subDays(new Date(), 13)), endOfDay(new Date())   
+   ] as [Date,Date])
+   $effect(()=>{
+   getMarkedCountsByDateRange(dataRange[0],dataRange[1])
+   .then(data=>{
+    statistics.lastSevenDaysMarked=data
+   })
+   });
+
 
   async function fetchStatistics() {
     const stats = await getStatistic();
-    statistics = { ...stats, mostFrequent: stats.mostFrequent as MarkedItem | undefined };
+    statistics = { ...stats, mostFrequent: stats.mostFrequent as MarkedItem | undefined,
+     lastSevenDaysMarked: []
+     };
   }
 
   fetchStatistics();
@@ -30,14 +60,17 @@
     {@render card("总单词数", statistics.total)}
     {@render card("已标记数", statistics.marked)}
     {@render card("已取消", statistics.unmarked)}
+  </div>
+  <div class="columns">
     {@render card("今日新增", statistics.today)}
     {@render card("最多次", statistics.mostFrequent?.content??'')}
   </div>
 
   <div class="chart-container">
-    <Chart type="bar" 
+    <Chart
+      type="bar"
       data={{
-        labels: statistics.lastSevenDaysMarked.map(day => `Day ${day.day}`),
+        labels: statistics.lastSevenDaysMarked.map(i => formatDate(i.day,'yyyy-MM-dd')),
         datasets: [
           {
             label: '新增单词数',

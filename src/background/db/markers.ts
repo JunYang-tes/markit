@@ -1,7 +1,7 @@
 
 import type { MarkedItem } from "../../share/types"
 import { journal, markers } from "."
-import { startOfDay } from 'date-fns'
+import { eachDayOfInterval, startOfDay, endOfDay } from 'date-fns';
 
 const Yes = 1
 const No = 0
@@ -118,8 +118,8 @@ export async function getStatistic() {
   const todayStartTime = startOfDay(new Date()).getTime();
 
   const [
-    total, 
-    today, 
+    total,
+    today,
     mostFrequent,
     unmarkedCount,
     markedCount
@@ -138,24 +138,31 @@ export async function getStatistic() {
       .count()
   ]);
 
-  const lastSevenDaysMarked:Array<{day:number,count:number}> = [];
-  for (let i = 0; i < 7; i++) {
-    const dayStartTime = todayStartTime - i * 24 * 60 * 60 * 1000;
-    const dayEndTime = dayStartTime + 24 * 60 * 60 * 1000;
-    const dayCount = await markers.where('date')
-      .between(dayStartTime, dayEndTime)
-      .count();
-    lastSevenDaysMarked.push({day:i,count:dayCount});
-  }
 
   return {
-    total, 
-    today, 
+    total,
+    today,
     mostFrequent,
     unmarked: unmarkedCount,
     marked: markedCount,
-    lastSevenDaysMarked
   };
+}
+
+
+export async function getMarkedCountsByDateRange(startDate: Date, endDate: Date) {
+  const markedCounts: Array<{ day: Date; count: number }> = [];
+  const days = eachDayOfInterval({ start: startDate, end: endDate });
+
+  for (let i = 0; i < days.length; i++) {
+    const dayStartTime = startOfDay(days[i]).getTime();
+    const dayEndTime = endOfDay(days[i]).getTime();
+    const dayCount = await markers.where('date')
+      .between(dayStartTime, dayEndTime)
+      .count();
+    markedCounts.push({ day: startOfDay(days[i]), count: dayCount });
+  }
+
+  return markedCounts;
 }
 
 export async function updateMarker(content: string, newData: Partial<MarkedItem>) {
