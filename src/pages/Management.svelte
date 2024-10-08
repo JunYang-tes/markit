@@ -152,6 +152,9 @@
     transform: translateY(calc(var(--top) * var(--size)));
     transition: all 0.5s;
   }  
+  aside.menu {
+    flex-shrink: 0;
+  }
   .selected a {
     color: var(--markit-color-primary) !important;
     font-weight: bolder;
