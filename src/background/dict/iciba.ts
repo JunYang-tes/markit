@@ -1,11 +1,34 @@
-import { domParser } from '../dom-parser'
 import { makeQuery } from './network-dict'
+
+function extractDataFromScript(text: string): string | null {
+  const startTag = '<script id="__NEXT_DATA__" type="application/json">';
+  const endTag = '</script>';
+
+  const startIndex = text.indexOf(startTag);
+  if (startIndex === -1) {
+    return null;
+  }
+
+  const endIndex = text.indexOf(endTag, startIndex + startTag.length);
+  if (endIndex === -1) {
+    return null;
+  }
+
+  const data = text.substring(startIndex + startTag.length, endIndex);
+  return data;
+}
+
 
 export const query = makeQuery({
   url: phrase => `https://iciba.com/word?w=${phrase}`,
   parser: async (text) => {
-    await domParser.setHtml(text)
-    const data = JSON.parse(await domParser.queryContent('#__NEXT_DATA__'))
+    const dataString = extractDataFromScript(text);
+    if (dataString == null) {
+      throw new Error("Failed to extract data from iciba")
+    }
+    const data = JSON.parse(
+      extractDataFromScript(text) ?? '{}'
+    )
     const wordInfo = data.props.pageProps.initialReduxState.word.wordInfo
     const baseInfo = wordInfo.baesInfo ??
       wordInfo.baseInfo;
