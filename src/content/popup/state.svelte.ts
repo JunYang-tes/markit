@@ -1,4 +1,4 @@
-import type { DictItem, QueryResult } from "../../share/types";
+import type { DictItem, MarkedItem, QueryResult } from "../../share/types";
 import { marker } from '../marker'
 
 export type Visibility = 'show-button' | 'show-win' | 'hidden'
@@ -7,6 +7,7 @@ export const status = $state({
   content: '',
   context: '',
   translation: undefined as Promise<QueryResult> | undefined,
+  marker: Promise.resolve(undefined) as Promise<MarkedItem | undefined>,
   x: 0,
   y: 0,
 })
@@ -27,10 +28,11 @@ export function showWin(content: string, x: number, y: number) {
     status.translation =
       marker.query(content)
         .then(item => item || Promise.reject("Failed to query"))
+    status.marker = marker.getByContent(content)
     status.visibility = 'show-win'
   }
 }
-export function showWinAnyway(x:number,y:number) {
+export function showWinAnyway(x: number, y: number) {
   status.visibility = 'show-win'
   status.x = x;
   status.y = y;

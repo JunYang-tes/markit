@@ -12,6 +12,7 @@ export const markerBuilder = build<{
   getByContent: (content: string) => Promise<MarkedItem | undefined>,
   query: (phrase: string, ignoreCache?: boolean) => Promise<QueryResult | undefined>,
   updateViewCount: (content: string) => Promise<void>,
+  updateMarker: (content: string, newData: Partial<MarkedItem>) => Promise<void>
   downloadDb: () => Promise<void>,
   exportToWebdav: (account: WebdavAccount) => Promise<void>,
   importFromWebdav: (account: WebdavAccount) => Promise<number>,
@@ -38,5 +39,6 @@ export const markerBuilder = build<{
   'syncFromJournal',
   'getJournalContent',
   'getJournalList',
-  'runSync'
+  'runSync',
+  'updateMarker'
 ])

@@ -139,7 +139,7 @@
       标记
     </button>
   {:else if status.visibility === "show-win" && status.translation}
-    <Translation translation={status.translation} onClose={hide} />
+    <Translation translation={status.translation}  markedItem={status.marker} onClose={hide} />
   {/if}
 </div>
 

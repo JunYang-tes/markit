@@ -1,6 +1,6 @@
 import { markerBuilder } from '../share/services/marker'
 import type { DictItem, QueryResult } from '../share/types'
-import { getByContent, isMarked, getList, add, unmark, updateViewCount, deleteMark } from './db/markers'
+import { updateMarker, getByContent, isMarked, getList, add, unmark, updateViewCount, deleteMark } from './db/markers'
 import * as dictDb from './db/dict'
 import * as db from './db'
 import { query as youdao } from './dict/youdao'
@@ -60,6 +60,7 @@ export function init() {
     uploadJournal,
     syncFromJournal,
     getJournalList,
+    updateMarker,
     getJournalContent,
   })
 }

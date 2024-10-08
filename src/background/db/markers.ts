@@ -158,3 +158,19 @@ export async function getStatistic() {
   };
 }
 
+export async function updateMarker(content: string, newData: Partial<MarkedItem>) {
+  const item = await getByContent(content);
+  if (item) {
+    const updatedItem = { ...item, ...newData };
+    await markers.put(updatedItem);
+    journal.add({
+      storeName: 'markers',
+      date: Date.now(),
+      operation: {
+        kind: 'update',
+        key: content,
+        data: updatedItem
+      }
+    });
+  }
+}
