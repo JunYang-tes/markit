@@ -52,7 +52,8 @@
   {:then [translation,markedItem]}
     {@const autoplayItem = translation.pronounce.find((i) => i.ipa !== "")}
     <div style="position:relative;">
-      <Icon path={mdiClose} role="button" style="position: absolute;right: 0;" 
+      <Icon path={mdiClose} role="button" 
+      style="position: absolute;right: -10px; top:-24px" 
         onclick={onClose}
       />
       <div class="pronounce">
@@ -95,7 +96,7 @@
       {/if}
       {#if isActived('comment') && markedItem!=null}
         <textarea
-          class="textarea"
+          class="textarea is-primary"
           rows="10"
           bind:value={markedItem.comment}
           onblur={() => marker.updateMarker(markedItem.content, {
@@ -105,7 +106,7 @@
       {/if}
       {#if isActived('context') && markedItem!=null}
         <textarea
-          class="textarea"
+          class="textarea is-primary"
           rows="10"
           bind:value={markedItem.context}
           onblur={() => marker.updateMarker(markedItem.content, {
@@ -137,5 +138,8 @@
 
   .markit-container :global(*[data-markit_marked]) {
     pointer-events: none;
+  }
+  textarea {
+    box-sizing: border-box; 
   }
 </style>
