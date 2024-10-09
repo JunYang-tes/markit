@@ -10,7 +10,9 @@
   import "../style.css";
   import { getId } from "../share/setting";
   import { management } from "webextension-polyfill";
-    import { useMediaQuery } from '../hooks/use-media-query.svelte';
+  import { useMediaQuery } from '../hooks/use-media-query.svelte';
+  import Toast from '../components/Toast/index.svelte';
+    import { addToast } from '../components/Toast/state.svelte';
   const components = {
     Statistics,
     Sync,
@@ -97,6 +99,7 @@
       <svelte:component this={components[selectedSubModule]} />
     </main>
   </div>
+  <Toast />
 </div>
 
 <style>
