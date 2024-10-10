@@ -10,9 +10,10 @@ export const toasts = $state([] as Toast[])
 export function addToast(toast: Omit<Toast, 'id'>) {
     const newToast: Toast = {
         ...toast,
+        duration: 3000,
         id: nanoid()
     };
-    if (newToast.duration) {
+    if (Number.isFinite(newToast.duration)) {
         setTimeout(() => {
             deleteToast(newToast.id);
         }, newToast.duration);
