@@ -26,9 +26,10 @@ export function sendMessage(channelName: string, message: any): Promise<any> {
   if (port === null) {
     connect()
   }
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const seq = id.next().value;
     registerSenderResolver(channelName, seq, resolve, reject)
+    await browser.runtime.sendMessage({type:'ping'})
     console.log("send:", {
       type: 'req',
       id: seq,

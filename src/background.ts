@@ -16,4 +16,8 @@ browser.runtime.onInstalled.addListener((details) => {
   console.log("Extension installed:", details);
   installSyllable()
 });
+browser.runtime.onMessage.addListener((message)=>{
+  console.log(message)
+
+})
 
