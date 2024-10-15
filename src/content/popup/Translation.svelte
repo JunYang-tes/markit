@@ -56,6 +56,7 @@
       style="position: absolute;right: -10px; top:-24px" 
         onclick={onClose}
       />
+      <Syllable syllables={translation.syllables} />
       <div class="pronounce">
         {#each translation.pronounce as pronounce}
           {#if pronounce.ipa}
