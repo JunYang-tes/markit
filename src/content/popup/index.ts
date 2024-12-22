@@ -25,6 +25,24 @@ ${css}
 `
 document.body.append(mountPoint)
 
+// Watch for mountPoint removal and re-append if deleted
+const mountPointObserver = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    if (mutation.type === 'childList') {
+      const mountPointRemoved = Array.from(mutation.removedNodes).includes(mountPoint);
+      if (mountPointRemoved) {
+        document.body.append(mountPoint);
+      }
+    }
+  }
+});
+
+mountPointObserver.observe(document.body, {
+  childList: true,
+  subtree: false
+});
+
+
 function showFloatingMarkButton() {
   function hideWhenClickedOutside(e: Event) {
     if (e.target !== mountPoint) {
