@@ -20,7 +20,7 @@ function extractDataFromScript(text: string): string | null {
 
 
 export const query = makeQuery({
-  url: phrase => `https://iciba.com/word?w=${phrase}`,
+  url: phrase => `https://www.iciba.com/word?w=${phrase}`,
   parser: async (text) => {
     const dataString = extractDataFromScript(text);
     if (dataString == null) {
