@@ -3,10 +3,13 @@ import type { Snippet } from 'svelte'
   let {
   expander,
   body,
-  expanderPosition= 'top'
-
+  expanderPosition= 'top',
+  ...rest
 }:{
-  expander:Snippet<[expanded:boolean]>,
+  expander:Snippet<[expanded:boolean,onClick:(()=>void)]>,
+  className:string|undefined,
+  expanderClass?:string,
+  bodyClass?:string,
   body:Snippet,
   expanderPosition?:'top'|'bottom'
 } = $props()
@@ -16,17 +19,20 @@ import type { Snippet } from 'svelte'
   let expanded = $state(false)
 </script>
 
-<div class={`collapse expander-${expanderPosition}`}>
+<div class={`collapse expander-${expanderPosition} ${rest.className}`}>
   <input 
   type="checkbox" bind:checked={expanded} 
   style={`grid-row-start:${expanderRow};`}
 />
-  <div class="collapse-title"
-  style={`grid-row-start:${expanderRow};`}
+  <div 
+    class="collapse-title {rest.expanderClass}"
+    style={`grid-row-start:${expanderRow};`}
   >
-    {@render expander(expanded)}
+    {@render expander(expanded,()=>{
+      expanded =!expanded
+    })}
   </div>
-  <div class="collapse-content"
+  <div class="collapse-content {rest.bodyClass}"
   style={`grid-row-start:${bodyRow};`}
   >
     {@render body()}
