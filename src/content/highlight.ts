@@ -142,7 +142,8 @@ function modifyDom(node: Node, items: Array<{ content: string, inRange: boolean 
         const rect = span.getBoundingClientRect()
         showWin(item.content, rect.x, rect.y)
       }, { capture: true })
-      span.setAttribute('style', 'all:unset;position:relative; z-index:10;  color:#d67200;text-decoration: underline wavy;cursor:pointer;text-underline-position: under;')
+      span.setAttribute('style', 
+        'all:unset;position:relative; z-index:10;  color:#d67200;text-decoration: underline wavy #d67200;cursor:pointer;text-underline-position: under;')
       frag.append(span)
     } else {
       const text = document.createTextNode(item.content);
