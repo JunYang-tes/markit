@@ -13,30 +13,23 @@ document.addEventListener("selectionchange", (e) => {
   const text = node?.nodeValue
   if (!node || !text) { return }
 
-
   if (node?.nodeType === Node.TEXT_NODE &&
     !selection.isCollapsed
   ) {
     const range = selection.getRangeAt(0)
     const halfHeight = window.innerHeight / 2
-    const rect = range.getClientRects()[0]
+    const rects = range.getClientRects()
+    if (rects.length === 0) {
+      return
+    }
+    const rect = rects[0]
     const dy = rect.y > halfHeight
       ? -30
       : rect.height
-    console.log(selection,e)
 
-
-    const selected = text.substring(selection.anchorOffset, selection.focusOffset);
-    if (selected.length === text.length) {
-      handleSelection(selected, node.parentElement?.textContent ?? '',
-        rect.x,
-        rect.y + dy
-      )
-    } else {
-      handleSelection(selected, text,
-        rect.x, rect.y + dy
-      )
+    const selectedText = selection.toString();
+    if(selectedText.length > 0){
+      handleSelection(selectedText, text, rect.x, rect.y + dy)
     }
-
   }
 })
