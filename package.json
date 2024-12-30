@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && mkdir ./dist/build && cp ./pdf.js/build/generic/build/pdf.worker.mjs ./dist/build/pdf.worker.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
