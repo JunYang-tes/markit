@@ -1,33 +1,35 @@
 <script lang="ts"> 
-    import type { FileStat } from "webdav";
-    import { getJournalList } from "../../background/sync/im-export";
-    import { addToast } from "../../components/Toast/state.svelte";
-  import Button from "../../components/Button.svelte";
-  import { marker } from "../../content/marker";
-    import MarkButton from "../../content/popup/MarkButton.svelte";
-  import { getWebdavAccount } from "../../share/setting";
-  import type { WebdavAccount  } from "../../share/setting";
-    import JournalList from "./Sync/JournalList.svelte";
-    import Icon from "../../components/Icon.svelte";
-    import { mdiInformation,mdiExport,mdiImport,mdiArrowExpandUp,mdiArrowExpandDown,
-      mdiChevronUp,
-      mdiChevronDown
-     } from "@mdi/js";
-    import Collapse from "../../components/Collapse.svelte";
-  //let account = getWebdavAccount()
-  let account = $state<WebdavAccount|null>(null)
-  let journalList =  $state([] as FileStat[])
-  getWebdavAccount().then(async a=>{
-    account = a
-    if(account) {
+import type { FileStat } from "webdav";
+import { getJournalList } from "../../background/sync/im-export";
+import { addToast } from "../../components/Toast/state.svelte";
+import Button from "../../components/Button.svelte";
+import { marker } from "../../content/marker";
+import MarkButton from "../../content/popup/MarkButton.svelte";
+import { getWebdavAccount } from "../../share/setting";
+import type { WebdavAccount  } from "../../share/setting";
+import JournalList from "./Sync/JournalList.svelte";
+import Icon from "../../components/Icon.svelte";
+import { mdiInformation,mdiExport,mdiImport,mdiArrowExpandUp,mdiArrowExpandDown,
+  mdiChevronUp,
+  mdiChevronDown
+} from "@mdi/js";
+import Confirm from '../../components/Confirm.svelte'
+import Collapse from "../../components/Collapse.svelte";
+//let account = getWebdavAccount()
+let confirmDialog:HTMLDialogElement;
+let account = $state<WebdavAccount|null>(null)
+let journalList =  $state([] as FileStat[])
+getWebdavAccount().then(async a=>{
+  account = a
+  if(account) {
     journalList = await getJournalList(account)
-    }
-  });
-  async function refreshJournalList() {
-    if(account) {
-      journalList = await getJournalList(account)
-    }
   }
+});
+async function refreshJournalList() {
+  if(account) {
+    journalList = await getJournalList(account)
+  }
+}
 </script>
 
 <div class="sync">
@@ -246,16 +248,23 @@
   <section>
     <h3 class="title is-4">其它</h3>
     <div class="field">
-      <Button variant="primary-outline" onclick={()=>marker.resetDb()}>
+      <Button variant="primary-outline" onclick={() => confirmDialog.showModal()}>
         重置
       </Button>
+      <Confirm
+        bind:dialog={confirmDialog}
+        title="重置确认"
+        message="您确定要重置所有数据吗？此操作不可恢复！"
+        onConfirm={() => {
+          marker.resetDb();
+          addToast({ message: '数据已重置', type: 'success' });
+        }}
+      />
     </div>
   </section>
 </div>
 
 <style>
-.sync {
-}
 :global(.card) {
   padding: var(--markit-space-s);
 }
