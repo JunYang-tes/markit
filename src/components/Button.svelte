@@ -1,12 +1,15 @@
 <script lang="ts">
-  import type { HTMLButtonAttributes } from "svelte/elements";
+import type { Snippet } from "svelte";
+import type { HTMLButtonAttributes } from "svelte/elements";
 
   let {
     variant = "primary",
     onclick: onclick,
+    children,
     ...rest
   }: HTMLButtonAttributes & {
     variant?: "primary" | "primary-outline";
+    children: Snippet
     onclick?: (e: MouseEvent) => void | Promise<void>;
   } = $props();
 
@@ -33,7 +36,7 @@
   onclick={handleClick}
   disabled={isLoading || rest.disabled}
 >
-  <slot />
+  {@render children()}
 </button>
 
 <style>
