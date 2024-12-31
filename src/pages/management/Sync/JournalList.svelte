@@ -6,7 +6,8 @@
   import { getWebdavAccount } from "../../../share/setting";
   import JsonViewer from "../../../components/JsonViewer.svelte";
   import type { DbJournal } from "../../../share/types";
-    import { reverse } from "lodash-es";
+  import { reverse } from "lodash-es";
+  import { getId } from "../../../share/setting";
 
   let { data } = $props<{
     data: FileStat[];
@@ -34,34 +35,41 @@
 
 </script>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th> 操作 </th>
-      <th> 设备 Id </th>
-      <th> 上次更新时间 </th>
-    </tr>
-  </thead>
-  <tbody>
-{#each data as item}
+{#await getId() then id}
+  <table class="table">
+    <thead>
       <tr>
-        <td>
-          <button
-            onclick={async () => {
-              viewing = (await getJournalContent((await account)!, item)).reverse();
-              console.log(viewing)
-              dialog.showModal();
-            }}
-          >
-            查看
-          </button>
-        </td>
-        <td>{item.basename}</td>
-        <td>{format(item.lastmod, "yyyy-MM-dd hh:mm:ss")}</td>
+        <th> 操作 </th>
+        <th> 设备 Id </th>
+        <th> 上次更新时间 </th>
       </tr>
-    {/each}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    {#each data as item}
+        <tr>
+          <td>
+            <button
+              onclick={async () => {
+                viewing = (await getJournalContent((await account)!, item)).reverse();
+                console.log(viewing)
+                dialog.showModal();
+              }}
+            >
+              查看
+            </button>
+          </td>
+          <td>
+            {item.basename}
+            {#if id === item.basename}
+              <span class="local-machine">(本机)</span>
+            {/if}
+          </td>
+          <td>{format(item.lastmod, "yyyy-MM-dd hh:mm:ss")}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+{/await}
 
 <Dialog
   class="journal-detail"
