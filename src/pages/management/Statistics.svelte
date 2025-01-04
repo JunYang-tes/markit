@@ -41,6 +41,7 @@
      lastSevenDaysMarked: []
      };
   }
+  console.log("DD")
 
   fetchStatistics();
 </script>
@@ -67,6 +68,17 @@
   </div>
 
   <div class="chart-container">
+    <input type="date" 
+      value={formatDate(dataRange[0],'yyyy-MM-dd')}
+      onchange={(e)=>{
+        dataRange[0]=e.currentTarget.valueAsDate!
+      }}
+    /> to <input type="date" 
+      value={formatDate(dataRange[1],'yyyy-MM-dd')}
+      onchange={(e)=>{
+        dataRange[1]=e.currentTarget.valueAsDate!
+      }}
+    />
     <Chart
       type="bar"
       data={{
