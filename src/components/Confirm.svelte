@@ -1,43 +1,25 @@
-<script lang="ts">
+<script lang="ts" module>
   import Dialog from './Dialog.svelte';
   import Button from './Button.svelte';
+  export { confirmDialog };
 
-  let {
-    title = 'Confirm',
-    message = 'Are you sure?',
-    onConfirm = () => {},
-    onCancel = () => {},
-    dialog = $bindable()
-  } = $props<{
-    title?: string;
-    message?: string;
-    onConfirm?: () => void;
-    onCancel?: () => void;
-    dialog?: HTMLDialogElement;
-  }>();
-
-
-  function handleConfirm() {
-    onConfirm();
-    dialog?.close();
-  }
-
-  function handleCancel() {
-    onCancel();
-    dialog?.close();
-  }
 
 </script>
 
-<Dialog bind:dialog={dialog}>
-  <h2>{title}</h2>
-  <p>{message}</p>
-  <div class="actions">
-    <Button variant="primary-outline" onclick={handleCancel}>取消</Button>
-    <Button variant="primary" onclick={handleConfirm}>确认</Button>
-  </div>
-</Dialog>
 
+{#snippet confirmDialog(props: {
+  title: string
+  message: string
+  onClose:(reason:'confirm'|'cancel')=>void
+})}
+  <div>
+    <h2>{props.title}</h2>
+    <p>{props.message}</p>
+    <div class="actions">
+      <Button variant="primary-outline" onclick={()=>props.onClose('cancel')}>取消</Button>
+      <Button variant="primary" onclick={()=>props.onClose('confirm')}>确认</Button>
+    </div>
+  </div>
 <style>
   h2 {
     margin-top: 0;
@@ -50,4 +32,7 @@
     margin-top: 1rem;
   }
 </style>
+  
+{/snippet}
+
 

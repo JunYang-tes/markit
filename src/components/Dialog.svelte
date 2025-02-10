@@ -12,6 +12,14 @@
   <slot />
 </dialog>
 
+{#snippet Dialog(props: {
+  dialog: HTMLDialogElement
+})}
+  <dialog bind:this={dialog}>
+    Hello
+  </dialog> 
+{/snippet}
+
 <style>
 dialog {
   border:none;

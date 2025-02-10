@@ -13,6 +13,9 @@
   import { useMediaQuery } from '../hooks/use-media-query.svelte';
   import Toast from '../components/Toast/index.svelte';
     import { addToast } from '../components/Toast/state.svelte';
+  import DialogContainer from '../components/DialogContainer.svelte';
+    import { openDialog } from '../components/DialogContainerState.svelte';
+    import Button from '../components/Button.svelte';
   const components = {
     Statistics,
     Sync,
@@ -100,6 +103,7 @@
     </main>
   </div>
   <Toast />
+  <DialogContainer />
 </div>
 
 <style>

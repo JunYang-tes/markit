@@ -13,10 +13,11 @@ import { mdiInformation,mdiExport,mdiImport,mdiArrowExpandUp,mdiArrowExpandDown,
   mdiChevronUp,
   mdiChevronDown
 } from "@mdi/js";
-import Confirm from '../../components/Confirm.svelte'
+import {confirmDialog} from '../../components/Confirm.svelte'
 import Collapse from "../../components/Collapse.svelte";
+    import { openDialog } from "../../components/DialogContainerState.svelte";
+
 //let account = getWebdavAccount()
-let confirmDialog:HTMLDialogElement;
 let account = $state<WebdavAccount|null>(null)
 let journalList =  $state([] as FileStat[])
 getWebdavAccount().then(async a=>{
@@ -248,18 +249,18 @@ async function refreshJournalList() {
   <section>
     <h3 class="title is-4">其它</h3>
     <div class="field">
-      <Button variant="primary-outline" onclick={() => confirmDialog.showModal()}>
+      <Button variant="primary-outline" onclick={async ()=>{
+        const [ret] = await openDialog(confirmDialog,{
+          title: '重置确认',
+          message: '您确定要重置所有数据吗？此操作不可恢复！'
+        })
+        if(ret==='confirm') {
+          await marker.resetDb();
+          addToast({ message: '数据已重置', type: 'success' });
+        }
+      }}>
         重置
       </Button>
-      <Confirm
-        bind:dialog={confirmDialog}
-        title="重置确认"
-        message="您确定要重置所有数据吗？此操作不可恢复！"
-        onConfirm={() => {
-          marker.resetDb();
-          addToast({ message: '数据已重置', type: 'success' });
-        }}
-      />
     </div>
   </section>
 </div>
