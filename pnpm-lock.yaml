@@ -34,7 +34,7 @@ dependencies:
     version: 4.6.82
   svelte-chartjs:
     specifier: https://github.com/anowell/svelte-chartjs.git#155042fc4866615014a12414b3b4815223bcb0b3
-    version: github.com/anowell/svelte-chartjs/155042fc4866615014a12414b3b4815223bcb0b3(chart.js@4.4.4)(svelte@5.0.0-next.143)
+    version: github.com/anowell/svelte-chartjs/155042fc4866615014a12414b3b4815223bcb0b3(chart.js@4.4.4)(svelte@5.16.0)
   webdav:
     specifier: ^5.6.0
     version: 5.7.1
@@ -42,7 +42,7 @@ dependencies:
 devDependencies:
   '@sveltejs/vite-plugin-svelte':
     specifier: 4.0.0-next.3
-    version: 4.0.0-next.3(svelte@5.0.0-next.143)(vite@4.5.5)
+    version: 4.0.0-next.3(svelte@5.16.0)(vite@4.5.5)
   '@tsconfig/svelte':
     specifier: ^3.0.0
     version: 3.0.0
@@ -56,11 +56,11 @@ devDependencies:
     specifier: ^9.12.0
     version: 9.12.0
   svelte:
-    specifier: 5.0.0-next.143
-    version: 5.0.0-next.143
+    specifier: 5.16.0
+    version: 5.16.0
   svelte-check:
     specifier: ^3.7.1
-    version: 3.8.6(postcss@8.4.47)(svelte@5.0.0-next.143)
+    version: 3.8.6(postcss@8.4.47)(svelte@5.16.0)
   tailwindcss:
     specifier: ^3.4.9
     version: 3.4.13
@@ -493,7 +493,7 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /@sveltejs/vite-plugin-svelte-inspector@3.0.0-next.3(@sveltejs/vite-plugin-svelte@4.0.0-next.3)(svelte@5.0.0-next.143)(vite@4.5.5):
+  /@sveltejs/vite-plugin-svelte-inspector@3.0.0-next.3(@sveltejs/vite-plugin-svelte@4.0.0-next.3)(svelte@5.16.0)(vite@4.5.5):
     resolution: {integrity: sha512-kuGJ2CZ5lAw3gKF8Kw0AfKtUJWbwdlDHY14K413B0MCyrzvQvsKTorwmwZcky0+QqY6RnVIZ/5FttB9bQmkLXg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22}
     peerDependencies:
@@ -501,27 +501,27 @@ packages:
       svelte: ^5.0.0-next.96 || ^5.0.0
       vite: ^5.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 4.0.0-next.3(svelte@5.0.0-next.143)(vite@4.5.5)
+      '@sveltejs/vite-plugin-svelte': 4.0.0-next.3(svelte@5.16.0)(vite@4.5.5)
       debug: 4.3.7
-      svelte: 5.0.0-next.143
+      svelte: 5.16.0
       vite: 4.5.5
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte@4.0.0-next.3(svelte@5.0.0-next.143)(vite@4.5.5):
+  /@sveltejs/vite-plugin-svelte@4.0.0-next.3(svelte@5.16.0)(vite@4.5.5):
     resolution: {integrity: sha512-9FD3VveALD9Qwci0++VvCMHKUzmDkcUzxtjUd/EQrQMSbUYa9nMrZMtXUp+MxEpZxJkWZz65RWw0IhH2HHBc1g==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22}
     peerDependencies:
       svelte: ^5.0.0-next.96 || ^5.0.0
       vite: ^5.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 3.0.0-next.3(@sveltejs/vite-plugin-svelte@4.0.0-next.3)(svelte@5.0.0-next.143)(vite@4.5.5)
+      '@sveltejs/vite-plugin-svelte-inspector': 3.0.0-next.3(@sveltejs/vite-plugin-svelte@4.0.0-next.3)(svelte@5.16.0)(vite@4.5.5)
       debug: 4.3.7
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.11
-      svelte: 5.0.0-next.143
+      svelte: 5.16.0
       vite: 4.5.5
       vitefu: 0.2.5(vite@4.5.5)
     transitivePeerDependencies:
@@ -1970,6 +1970,10 @@ packages:
       readable-stream: 2.3.8
     dev: true
 
+  /clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
+
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
@@ -2622,8 +2626,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /esm-env@1.0.0:
-    resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
+  /esm-env@1.2.1:
+    resolution: {integrity: sha512-U9JedYYjCnadUlXk7e1Kr+aENQhtUaoaV9+gZm1T8LC/YBAPJx3NSPIAurFOC0U5vrdSevnUJS2/wUVxGwPhng==}
 
   /esprima@4.0.1:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
@@ -2631,11 +2635,10 @@ packages:
     hasBin: true
     dev: true
 
-  /esrap@1.2.2:
-    resolution: {integrity: sha512-F2pSJklxx1BlQIQgooczXCPHmcWpn6EsP5oo73LQfonG9fIlIENQ8vMmfGXeojP9MrkzUNAfyU5vdFlR9shHAw==}
+  /esrap@1.3.2:
+    resolution: {integrity: sha512-C4PXusxYhFT98GjLSmb20k9PREuUdporer50dhzGuJu9IJXktbMddVCMLAERl5dAHyAi73GWWCE4FVHGP1794g==}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.6
 
   /exit-hook@1.1.1:
     resolution: {integrity: sha512-MsG3prOVw1WtLXAZbM3KiYtooKR1LvxHh3VHsVtIy0uiUu8usxgB/94DP2HxtD/661lLdB6yzQ09lGJSQr6nkg==}
@@ -3808,8 +3811,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /is-reference@3.0.2:
-    resolution: {integrity: sha512-v3rht/LgVcsdZa3O2Nqs+NMowLOxeOm7Ay9+/ARQ2F+qEoANRcqrjAZKGN0v8ymUetZGgkp26LTnGT7H0Qo9Pg==}
+  /is-reference@3.0.3:
+    resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
     dependencies:
       '@types/estree': 1.0.6
 
@@ -6260,7 +6263,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check@3.8.6(postcss@8.4.47)(svelte@5.0.0-next.143):
+  /svelte-check@3.8.6(postcss@8.4.47)(svelte@5.16.0):
     resolution: {integrity: sha512-ij0u4Lw/sOTREP13BdWZjiXD/BlHE6/e2e34XzmVmsp5IN4kVa3PWP65NM32JAgwjZlwBg/+JtiNV1MM8khu0Q==}
     hasBin: true
     peerDependencies:
@@ -6270,8 +6273,8 @@ packages:
       chokidar: 3.6.0
       picocolors: 1.1.0
       sade: 1.8.1
-      svelte: 5.0.0-next.143
-      svelte-preprocess: 5.1.4(postcss@8.4.47)(svelte@5.0.0-next.143)(typescript@5.6.2)
+      svelte: 5.16.0
+      svelte-preprocess: 5.1.4(postcss@8.4.47)(svelte@5.16.0)(typescript@5.6.2)
       typescript: 5.6.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -6285,7 +6288,7 @@ packages:
       - sugarss
     dev: true
 
-  /svelte-preprocess@5.1.4(postcss@8.4.47)(svelte@5.0.0-next.143)(typescript@5.6.2):
+  /svelte-preprocess@5.1.4(postcss@8.4.47)(svelte@5.16.0)(typescript@5.6.2):
     resolution: {integrity: sha512-IvnbQ6D6Ao3Gg6ftiM5tdbR6aAETwjhHV+UKGf5bHGYR69RQvF1ho0JKPcbUON4vy4R7zom13jPjgdOWCQ5hDA==}
     engines: {node: '>= 16.0.0'}
     requiresBuild: true
@@ -6329,12 +6332,12 @@ packages:
       postcss: 8.4.47
       sorcery: 0.11.1
       strip-indent: 3.0.0
-      svelte: 5.0.0-next.143
+      svelte: 5.16.0
       typescript: 5.6.2
     dev: true
 
-  /svelte@5.0.0-next.143:
-    resolution: {integrity: sha512-hRm52FjYUfd24eUlkBS41JSmqHOx6wt0cV+wMzgwqhhxIpJoz96eiMcnvcLqXx+gTxM1m0Pt/+7xP3vlm2QvPg==}
+  /svelte@5.16.0:
+    resolution: {integrity: sha512-Ygqsiac6UogVED2ruKclU+pOeMThxWtp9LG+li7BXeDKC2paVIsRTMkNmcON4Zejerd1s5sZHWx6ZtU85xklVg==}
     engines: {node: '>=18'}
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -6344,9 +6347,10 @@ packages:
       acorn-typescript: 1.4.13(acorn@8.12.1)
       aria-query: 5.3.2
       axobject-query: 4.1.0
-      esm-env: 1.0.0
-      esrap: 1.2.2
-      is-reference: 3.0.2
+      clsx: 2.1.1
+      esm-env: 1.2.1
+      esrap: 1.3.2
+      is-reference: 3.0.3
       locate-character: 3.0.0
       magic-string: 0.30.11
       zimmerframe: 1.1.2
@@ -7212,7 +7216,7 @@ packages:
       jszip: 3.10.1
     dev: true
 
-  github.com/anowell/svelte-chartjs/155042fc4866615014a12414b3b4815223bcb0b3(chart.js@4.4.4)(svelte@5.0.0-next.143):
+  github.com/anowell/svelte-chartjs/155042fc4866615014a12414b3b4815223bcb0b3(chart.js@4.4.4)(svelte@5.16.0):
     resolution: {tarball: https://codeload.github.com/anowell/svelte-chartjs/tar.gz/155042fc4866615014a12414b3b4815223bcb0b3}
     id: github.com/anowell/svelte-chartjs/155042fc4866615014a12414b3b4815223bcb0b3
     name: svelte-chartjs
@@ -7222,5 +7226,5 @@ packages:
       svelte: ^5.0.0-next
     dependencies:
       chart.js: 4.4.4
-      svelte: 5.0.0-next.143
+      svelte: 5.16.0
     dev: false
