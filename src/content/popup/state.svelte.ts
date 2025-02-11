@@ -1,4 +1,5 @@
 import type { DictItem, MarkedItem, QueryResult } from "../../share/types";
+import { hightlightUnderNode } from "../highlight";
 import { marker } from '../marker'
 
 export type Visibility = 'show-button' | 'show-win' | 'hidden'
@@ -66,3 +67,17 @@ export function withLoading<Args extends any[], T>(fn: (...args: Args) => Promis
   }
 }
 
+export const mark = (async () => {
+  const item = await marker.add(
+    status.content,
+    location.href,
+    status.context,
+  );
+  if (item) {
+    hightlightUnderNode(document.body, [item]);
+  }
+  status.translation = marker
+    .query(status.content)
+    .then((data) => (data ? data : Promise.reject("Failed to query")));
+  showWinAnyway(status.x, status.y);
+});

@@ -18,6 +18,7 @@
   import type { MiddlewareState, Middleware } from "@floating-ui/dom";
   import { onMount, untrack } from "svelte";
   import { useMediaQuery } from "../../hooks/use-media-query.svelte.ts";
+  import browser from "webextension-polyfill";
   let container: HTMLElement;
   let isMobile = useMediaQuery("(max-width:500px)");
 
@@ -127,19 +128,36 @@
       showWinAnyway(status.x, status.y);
     }
   });
+
+
+  browser.runtime.onMessage.addListener((message,sender,sendResponse) => {
+    if (message.action === "callMark") {
+      mark.call();
+    }
+    if(message.action ==="query") {
+      sendResponse({
+        content: status.content
+      })
+    }
+  });
 </script>
 
 <div
   bind:this={container}
   class="mk-container card"
   style:color={`${status.visibility === "show-button"}?'block':'none'`}
+  onscroll={(e) => e.stopPropagation()}
 >
   {#if status.visibility === "show-button"}
     <button class="button is-white" disabled={mark.loading} onclick={mark.call}>
       标记
     </button>
   {:else if status.visibility === "show-win" && status.translation}
-    <Translation translation={status.translation}  markedItem={status.marker} onClose={hide} />
+    <Translation
+      translation={status.translation}
+      markedItem={status.marker}
+      onClose={hide}
+    />
   {/if}
 </div>
 
@@ -151,3 +169,4 @@
     }
   }
 </style>
+
