@@ -24,6 +24,7 @@ export default defineConfig({
     }),
     webExtension({
       manifest: generateManifest,
+      browser: process.env.TARGET || 'chrome',
       additionalInputs:['html/viewer.html','html/index.html'],
       watchFilePaths: ["package.json", "manifest.json"],
     }),

@@ -13,9 +13,10 @@ if (!isBackground()) {
 
 
 function connect() {
-  port = browser.runtime.connect(undefined, {
-    name: 'channel'
-  });
+  // port = browser.runtime.connect(undefined, {
+  //   name: 'channel'
+  // });
+  port = browser.runtime.connect({ name: 'channel' })
   port.onMessage.addListener(onMessage)
   port.onDisconnect.addListener(() => {
     port = null
@@ -29,19 +30,23 @@ export function sendMessage(channelName: string, message: any): Promise<any> {
   return new Promise(async (resolve, reject) => {
     const seq = id.next().value;
     registerSenderResolver(channelName, seq, resolve, reject)
-    await browser.runtime.sendMessage({type:'ping'})
-    console.log("send:", {
-      type: 'req',
-      id: seq,
-      channelName,
-      body: message
-    })
-    port?.postMessage({
-      type: 'req',
-      id: seq,
-      channelName,
-      body: message
-    })
+    await browser.runtime.sendMessage({ type: 'ping' })
+    if (port) {
+      console.log("[content] send:", {
+        type: 'req',
+        id: seq,
+        channelName,
+        body: message
+      })
+      port.postMessage({
+        type: 'req',
+        id: seq,
+        channelName,
+        body: message
+      })
+    } else {
+      console.log("[content] No connected port")
+    }
   })
 
 }

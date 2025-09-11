@@ -1,4 +1,7 @@
 
 export function isBackground() {
-  return globalThis.window == null
+  if (typeof browser.tabs !== 'undefined') {
+    return true
+  }
+  return false
 }

@@ -4,6 +4,7 @@ import { isBackground } from '../utils';
 
 let port: browser.Runtime.Port | null = null
 
+console.log("check is background:", isBackground())
 if (isBackground()) {
   browser.runtime.onConnect.addListener(port => {
     console.log("port connected:", port.name)
@@ -11,6 +12,10 @@ if (isBackground()) {
       port.onMessage.addListener(onMessage)
     }
   })
+  // browser.runtime.onMessage.addListener(async (message) => {
+  //   onMessage(message, port)
+  //   
+  // })
 }
 
 async function connect() {

@@ -1,6 +1,11 @@
 {
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
+  "applications": {
+    "gecko": {
+      "id": "markit-extension@yangxiaobao.top"
+    }
+  },
   "icons": {
     "16": "icon/16.png",
     "32": "icon/32.png",
@@ -21,10 +26,27 @@
     "tabs",
     "downloads"
   ],
-  "web_accessible_resources":[
+  "{{firefox}}.permissions": [
+    "storage",
+    "contextMenus",
+    "webRequest",
+    "tabs",
+    "downloads",
+    "https://dav.jianguoyun.com/*",
+    "https://www.iciba.com/*",
+    "https://dict.youdao.com/"
+  ],
+  "{{firefox}}.web_accessible_resources": [
+    "html/viewer.html"
+  ],
+  "{{chrome}}.web_accessible_resources": [
     {
-      "resources":["html/viewer.html"],
-      "matches":["file:///*"]
+      "resources": [
+        "html/viewer.html"
+      ],
+      "matches": [
+        "file:///*"
+      ]
     }
   ],
   "content_scripts": [

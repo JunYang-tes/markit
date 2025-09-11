@@ -12,8 +12,8 @@ export function makeChannel(
 ) {
   registerChannelHandler(name, responser)
   return (message: any) => {
+    console.log("Is background", isBackground(), name, message)
     if (isBackground()) {
-      console.log("will send:",message," to ",name)
       return bg.sendMessage(name, message)
     } else {
       return fg.sendMessage(name, message)

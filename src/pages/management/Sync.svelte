@@ -200,7 +200,7 @@ async function refreshJournalList() {
               variant="primary-outline"
               onclick={async ()=>{
                 try {
-                  await marker.uploadJournal(account!)
+                  await marker.uploadJournal( account!)
                   refreshJournalList()
                   addToast({ message: '上传成功', type: 'success' });
                   refreshJournalList()
@@ -214,7 +214,7 @@ async function refreshJournalList() {
               variant="primary-outline"
               onclick={async() => {
                 try {
-                  await marker.syncFromJournal(account!)
+                  await marker.syncFromJournal($state.snapshot(account!))
                   addToast({ message: '同步成功', type: 'success' });
                 } catch(e) {
                   addToast({ message: '同步失败 ' + e, type: 'error' });
